@@ -1,0 +1,5 @@
+,PatchCore,EfficientAD,SVM,kNN-5
+PatchCore,61,16,29,29
+EfficientAD,16,68,23,19
+SVM,29,23,95,45
+kNN-5,29,19,45,81

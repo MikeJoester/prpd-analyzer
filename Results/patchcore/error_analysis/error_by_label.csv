@@ -1,0 +1,6 @@
+cls,label,files,errors,error_rate
+Noise,Noise,154,43,0.2792207792207792
+PD,Corona,6,5,0.8333333333333334
+PD,Floating,17,2,0.11764705882352941
+PD,Particle,1,0,0.0
+PD,Void,51,11,0.21568627450980393

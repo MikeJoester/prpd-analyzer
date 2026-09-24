@@ -2,7 +2,7 @@
 
     python Comparison/plot_confusions.py --out Results/paper_figures
 
-For each method it uses the seed whose test AUROC is the median of the three, and draws:
+By default each method uses its median-AUROC seed; --seed N fixes the same seed for all. Draws:
   confusion_matrices_<thr>.png     2x2 PD/Noise matrix per method, one panel each
   detailed_by_fault_type_<thr>.png rows = Corona/Floating/Particle/Void/Noise, columns = predicted
   confusion_matrices_<thr>.csv     the same counts as a table
@@ -89,10 +89,12 @@ def draw(ax, counts: np.ndarray, rows: list[str], cols: list[str], title: str, s
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--out", type=Path, default=REPO_ROOT / "Results" / "paper_figures")
+    p.add_argument("--seed", type=int, default=None,
+                   help="use this seed for every method (default: each method's median-AUROC seed)")
     args = p.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
 
-    chosen = {name: pick_seed(pat) for name, pat in METHODS.items()}
+    chosen = {name: (args.seed or pick_seed(pat)) for name, pat in METHODS.items()}
     rows_csv = []
 
     for kind in ("optimal", "val"):

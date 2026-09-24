@@ -1,131 +1,165 @@
-# PatchCore PD-vs-Noise error analysis plan
+# PatchCore PD-vs-Noise error analysis — paper section + investigation plan
 
-Purpose: find out **why** the two-bank PatchCore is wrong on the files it gets wrong, and turn that into
-either a fix or a documented limitation for the paper. Written 2026-09-24 against
-`Results/patchcore/final_k8_s42..44` (v2 data, 229 test files: 75 PD, 154 Noise).
+Merges `my-error-analysis-plan.md` (the paper-section skeleton, §1–§5 below) with the investigation needed to
+fill it. Written 2026-09-24 against `Results/patchcore/final_k8_s42..44` (v2 data: 229 test files, 75 PD / 154 Noise).
+
+**Part A** is the write-up structure, with the numbers already in hand and the gaps marked.
+**Part B** is the analysis work that closes those gaps.
 
 ---
 
-## 1. What the errors already look like (measured, not assumed)
+## How the generic outline was adapted to this dataset
 
-These five facts come from the existing run artifacts and should shape everything below.
-
-| # | Finding | Numbers (seed 42, val threshold) |
+| Outline item | Problem here | Replacement |
 |---|---|---|
-| E1 | **Most errors are false "PD" calls on noise**, not missed PD | 43 of 61 errors are Noise→PD; 18 are PD→Noise |
-| E2 | **Errors concentrate on a few field dates** | 3 dates hold 64% of all errors; `20250217` (20/32 wrong) and `20250213` (12/24) are both Field Noise |
-| E3 | **Errors sit near the decision threshold** | median \|score − τ\| is 0.035 for errors vs 0.131 for correct files; the half nearest τ holds a 40% error rate, the far half 13% |
-| E4 | **Errors are seed-unstable** | 61 / 30 / 54 errors for seeds 42/43/44; only **10 files are wrong in all three**, while 53 are wrong in exactly one |
-| E5 | **Every missed PD file has PD-looking windows** | for all 18 PD→Noise files, at least one window scores on the PD side; the `mean` aggregation dilutes them |
-
-Read together: this looks much more like a **calibration/aggregation problem on a couple of unfamiliar
-noise environments** than like a feature extractor that cannot see PD. The analysis below is designed
-to confirm or kill that reading.
+| "FPs = normal flagged anomalous, FNs = anomalies missed" | This is **not** normal-vs-anomaly. Two banks compete, and neither class is "normal". | Define once: **PD is the event of interest**, so FN = missed PD, FP = noise called PD. State it in the caption; the code's positive class is Noise, so the confusion matrices must be read accordingly. |
+| §2 causes: lighting, shadows, surface marks | No such factors in PRPD. | Real candidate causes: unfamiliar **noise environment** on specific dates, **bursty PD** diluted by window averaging, **Lab-dominated PD bank**, **amplitude/attenuation** differences, label noise. |
+| §2 Category 3 + §3 ground-truth mask column | **There is no pixel-level ground truth**, and none can be made without a physics-based annotation of pulse locations. | Report window-level attribution instead: the 28 per-window scores as a strip, and whether the top-scoring window coincides with visible discharge activity. Qualitative, and stated as such. |
+| §3 "3×3 grid: image / mask / heatmap" | Only two of three columns exist, **and the raw 128×3600 view is a pulse-sequence (PRPS) plot, not the 2D PRPD pattern PD papers show**. | Columns: **φ-q-n PRPD pattern** (phase × amplitude, colour = pulse count — the conventional 2D view), **per-window score strip**, **nearest memory-bank neighbour**. See §3 and Analysis J. |
+| §4 "coreset discarded rare normal variations" | Testable here, and partly tested already. | Keep, with our measured evidence: coreset 0.001 → 0.748, 0.01 → 0.954, 0.05 → 0.957 val AUROC (saturating, so the coreset is **not** the bottleneck). |
+| §5 "fine-tune the feature extractor" | PatchCore has **no trainable parameters** — fine-tuning means replacing the backbone or its weights, which changes the method. | Frame as: swap backbone, or train a small projection on Field data; and note that the honest finding may be that ImageNet features are the ceiling. |
 
 ---
 
-## 2. Hypotheses to test, in priority order
+# Part A — the paper section
 
-Each has a test, the evidence that would confirm it, and what to do if it holds.
+## §1 Quantitative breakdown of errors
 
-| # | Hypothesis | Test | Confirming evidence | Action if true |
+**Already measurable** (seed 42, threshold chosen on val):
+
+| | Value |
+|---|---|
+| Errors | 61 of 229 files |
+| **Noise → PD (false PD alarms)** | **43** |
+| PD → Noise (missed PD) | 18 |
+| At the F1-optimal threshold instead | 36 errors: 32 missed PD, 4 false alarms |
+
+The direction **flips with the threshold**, which is itself the story: at the val threshold the model over-calls PD;
+at the F1-optimal point it becomes conservative and misses PD instead. Report both, and say which threshold each
+number belongs to.
+
+*Drafting line:* "PatchCore reached an image-level AUROC of 0.853 [0.816, 0.872] over three seeds. At the
+validation-selected threshold, 43 of 61 errors were noise files called PD, while at the F1-optimal threshold the
+balance inverts to 32 missed PD against 4 false alarms — the ranking is stable, the operating point is not."
+
+Needs: **Analysis A, C, I** (error table, margin/calibration, confidence interval).
+
+## §2 Categorization of failure modes
+
+**Category 1 — over-sensitivity (noise called PD).** Measured: errors concentrate on a few field dates. Three dates
+hold **64%** of all errors; `20250217` (20 of 32 files wrong) and `20250213` (12 of 24) are both Field Noise dates.
+Candidate cause: a noise environment the Noise bank never saw (H3).
+
+**Category 2 — under-sensitivity (missed PD).** Measured: for **all 18** missed PD files, at least one window scores
+on the PD side. The `mean` aggregation over 28 windows dilutes bursty discharge (H1). By fault type at the optimal
+threshold, Corona is missed 6/6 and Void 23/51, while Floating is caught 15/17.
+
+**Category 3 — attribution (replaces "localization").** Whether the highest-scoring windows coincide with visible
+discharge. No ground truth, so this is illustrative, not a metric.
+
+Needs: **Analysis B, D, E, F**.
+
+## §3 Visual analysis — in the 2D PRPD representation
+
+**Supervisor note (2026-09-24): error cases must be shown as 2D PRPD patterns of the raw data, the way the
+literature presents them.** Our stored matrix is `128 phase × 3600 cycles` of peak amplitudes — a *pulse
+sequence* (PRPS) view. The conventional PD figure is the **φ-q-n plot**: phase (0–360°) on x, apparent charge
+/ amplitude on y, colour = number of pulses. It is obtained by histogramming amplitudes over the cycle axis
+(verified: one Lab Corona file gives 75,615 pulses in a 128 × 256 phase-amplitude histogram).
+
+Figure, ~8 rows: 4 noise-called-PD and 4 missed-PD, each with a **correct file from the same date** beside it
+for contrast, so the reader sees what separates them rather than one pattern alone.
+
+| Column | Content |
+|---|---|
+| 1 | **φ-q-n PRPD pattern** (phase × amplitude, log-count colour) — the view a PD engineer reads |
+| 2 | PRPS view (`128 × 3600`) — what the model actually consumed |
+| 3 | Per-window score strip (28 windows), threshold marked |
+| 4 | **Nearest memory-bank neighbour** as a φ-q-n plot, labelled with its group/label/date |
+
+Caption must state that no pixel ground truth exists and that column 4 is the matched training window.
+
+Needs: **Analysis J (new), E, F**.
+
+## §4 Root-cause hypotheses (PatchCore mechanics)
+
+| Mechanism | Status | Evidence |
+|---|---|---|
+| **Aggregation dilutes bursty PD** (H1) | strongest lead, untested | E5: every missed PD file has PD-like windows |
+| **The two banks' distances are on different scales** (H2) | untested | val→test threshold transfer is poor: macro F1 0.727 at val threshold vs 0.799 at test-optimal |
+| **Unfamiliar noise environment** (H3) | untested | 2 dates dominate the false alarms |
+| **PD bank is Lab-dominated** (H4) | untested | 1,435 Lab vs 348 Field PD files in the bank; all evaluation is Field |
+| **Backbone unsuited to PRPD** (§4 of your outline) | partly tested | WideResNet-50 0.954 vs ResNet-50 0.881 val; and PatchCore only **ties** a kNN on the 256-D hand feature (0.853 vs 0.860 test), which is the real indictment of ImageNet features |
+| **Coreset discarded rare normals** | **tested, rejected** | 0.001 → 0.748, 0.01 → 0.954, 0.05 → 0.957: saturating |
+| **Label noise** (H5) | untested | 23 files already relabelled by the 260909 change log |
+| **Small-sample noise** (H6) | partly measured | only 10 of 229 files are wrong in all three seeds; 53 are wrong in exactly one |
+
+## §5 Implications and solutions
+
+Order by what the evidence supports:
+
+1. **Change the window aggregation** (count-of-PD-like-windows instead of mean) — targets the measured Category 2.
+2. **Rank-normalize each bank's distances** — targets the threshold instability.
+3. **Rebalance the PD bank toward Field** (`--k-field`) — targets the domain gap.
+4. **Recover the 690 undated files** so val/test stop being this thin — the largest lever, and a data fix.
+5. **Backbone alternatives**, stated honestly: if PatchCore cannot beat a 256-D kNN, the finding to report is that
+   ImageNet features add nothing on PRPD, not that PatchCore needs more tuning.
+
+---
+
+# Part B — the investigation
+
+## Hypotheses (test → confirming evidence → action)
+
+| # | Hypothesis | Test | Confirms if | Action |
 |---|---|---|---|---|
-| **H1** | **Aggregation dilutes bursty PD.** PD activity occupies a few of the 28 windows; averaging buries it. | For each test file, compare the label decision under `mean`, `min`, `p10`, and "k-of-28 windows below τ". Measure how many of the 18 missed PD files flip. | ≥ half the missed PD files flip to correct without adding many new Noise→PD errors | Replace the aggregation with a count-based rule (e.g. "PD if ≥ 3 windows are PD-like"), chosen on val |
-| **H2** | **The two banks' distances are on different scales**, so `d_pd − d_noise` is biased and τ does not transfer. | Rank-normalize each `d` against that bank's own train-window score distribution, then re-evaluate with the val-chosen τ. | val→test threshold gap shrinks; macro F1 at the val threshold moves toward the optimal-threshold F1 (0.727 → 0.799 gap) | Adopt rank normalization in `evaluate_two_model.py` |
-| **H3** | **Two noise dates are a novel environment** the Noise bank does not cover. | For every test window, record `d_noise` and group by date. Compare the two bad dates against the other noise dates and against the train-window `d_noise` distribution. | `d_noise` is systematically higher on `20250213` / `20250217` — they are far from *both* banks, not "PD-like" | Report as a coverage limitation; test whether adding those dates' *train-split* neighbours (or more Field noise) closes it |
-| **H4** | **The PD bank is Lab-dominated** (1,435 Lab vs 348 Field files), so Field PD is far from it. | For each test file's nearest bank entries, record whether they come from Lab or Field train windows, and compare error vs correct files. | Missed PD files match Lab windows far less often / at larger distance than correct ones | Raise `--k-field` (fine-tuning plan #9), or build the PD bank from Field only and compare |
-| **H5** | **Some "errors" are label errors.** The 260909 change log already moved 23 files. | Cross-reference persistent errors (E4's 10 files) with the Analyzer `suspect_score` from `prpd_analyzer.quality`, and inspect their PRPD images. | Persistent errors score in the top suspect percentiles, and look like the class the model predicted | Send that list to review (do not silently relabel — CLAUDE.md forbids it) |
-| **H6** | **Most errors are borderline noise, not systematic failure** (E3, E4). | Bootstrap the test metric over dates and report a confidence interval; count how many errors lie within the seed-to-seed score spread. | The interval is wide (roughly ±0.05 AUROC) and most errors are inside the seed band | State in the paper that the test set cannot separate methods below that margin; push for date-grouped CV |
+| **H1** | Aggregation dilutes bursty PD | Re-decide every file under `mean`/`min`/`p10`/"k-of-28", chosen on val | ≥ half of the 18 missed PD flip, without many new false alarms | Adopt the count rule |
+| **H2** | Bank distance scales differ | Rank-normalize each `d` against its own bank's train scores, re-evaluate at the val threshold | The 0.727 → 0.799 gap shrinks | Adopt in `evaluate_two_model.py` |
+| **H3** | Novel noise environment on 2 dates | Compare `d_noise` per date against other noise dates and the train distribution | Those dates are far from **both** banks | Report as coverage limit; test adding field-noise variety |
+| **H4** | PD bank is Lab-dominated | For each test file's nearest entries, record Lab vs Field origin | Missed PD match Lab windows less / at larger distance | Raise `--k-field` |
+| **H5** | Some errors are label errors | Cross-reference persistent errors with the Analyzer `suspect_score`, **and judge their φ-q-n pattern against the canonical signature of their labelled class (Analysis M)** | Persistent errors rank high on suspicion and their 2D pattern does not match the labelled fault type | Send for expert review with the φ-q-n figure — never relabel silently |
+| **H6** | Much of the error is sampling noise | Bootstrap over **dates**, count errors inside the seed band | Interval ≈ ±0.05 AUROC | State the resolution limit of the test set |
 
----
+## Analyses and deliverables (all under `Results/patchcore/error_analysis/`)
 
-## 3. Analyses to run (with deliverables)
-
-### A. Error taxonomy — `Results/patchcore/error_analysis/error_table.csv`
-One row per test file: `sample_id`, date, group, label, score, margin to τ, prediction, error flag per seed,
-error flag for SVM and EfficientAD. This is the substrate for everything else.
-*Cheap, local, no GPU.*
-
-### B. Where the errors live — `error_by_date.csv`, `error_by_label.csv`, plus a date × error-rate figure
-Error rate per date with file counts, and per fault type. Include noise dates: E2 says that's where the mass is.
-*Cheap, local.*
-
-### C. Margin and calibration — `margin_hist.png`, `calibration.json`
-Score histograms for correct vs wrong files, error rate in margin deciles, and the H2 rank-normalization
-re-evaluation. Report macro F1 at the val threshold before and after.
-*Cheap, local.*
-
-### D. Aggregation study — `aggregation_study.csv`
-For each candidate rule (`mean`, `median`, `min`, `p10`, `p90`, "k-of-28"), the val-chosen τ and the resulting
-val and test confusion. Tests H1 directly. **Choose on val only.**
-*Cheap, local — window scores are already saved.*
-
-### E. Nearest-neighbour introspection — `nn_audit.csv` (the "why" tool)
-For each error file's worst window, query both faiss indexes for its top-5 neighbours and map those indexes back
-to rows of `bank_*/train_windows.csv`, which record `sample_id`, `domain` and `label`. That turns "distance 0.31"
-into "its nearest match is a Lab Corona window from file X". Tests H4, and often explains H3 too.
-*Needs the saved banks → run on the server (faiss). Half a day of coding.*
-
-### F. Visual case review — `cases/<sample_id>.png`
-For ~15 files (the 10 persistent errors, plus the largest-margin mistakes in each direction): the full
-128×3600 PRPD, the 28 window scores as a strip, and the nearest bank neighbour from E. This is what a
-reviewer will want to see, and it feeds H5.
-*Cheap once E exists.*
-
-### G. Label-quality cross-check — `suspect_cross_check.csv`
-Join persistent errors against `build_category_report` (pooled shrinkage Mahalanobis, `quality.py`).
-Report overlap, don't change labels.
-*Cheap, local.*
-
-### H. Cross-method error overlap — `method_overlap.csv` + Venn-style counts
-Already partly measured: at seed 42 PatchCore and SVM share 29 errors, PatchCore and EfficientAD 16, and only
-**6 files are wrong for all three**. Files all three miss are candidates for "genuinely ambiguous"; files only
-PatchCore misses point at something specific to its features.
-*Cheap, local.*
-
-### I. Uncertainty — `bootstrap.json`
-Bootstrap AUROC and macro F1 by **resampling dates** (not files), since files within a date are correlated.
-Report a 95% interval for every method. Tests H6 and tells you which differences in the comparison table are real.
-*Cheap, local.*
-
----
-
-## 4. Order of work
-
-| Step | Analyses | Why here | Effort |
+| ID | Output | Content | Cost |
 |---|---|---|---|
-| 1 | A, B, H | Builds the substrate and confirms E1–E2 for all three seeds | 2–3 h |
-| 2 | I | Tells you which differences are even worth explaining | 1 h |
-| 3 | D | Directly targets the biggest identified mechanism (E5/H1) | 2 h |
-| 4 | C | Threshold transfer is the other big mechanism (E3/H2) | 2 h |
-| 5 | E, F | The "why", and the figures a reviewer asks for | 1 day |
-| 6 | G | Feeds the data-quality track, not the model | 2 h |
+| **A** | `error_table.csv` | One row per test file: score, margin to τ, prediction, error flag per seed, error flags for SVM and EfficientAD | 2 h, local |
+| **B** | `error_by_date.csv`, `error_by_label.csv`, `error_rate_by_date.png` | Where the errors live | 1 h, local |
+| **C** | `margin_hist.png`, `calibration.json` | Error rate by margin decile; H2 rank-normalization result | 2 h, local |
+| **D** | `aggregation_study.csv` | Each aggregation rule × val-chosen τ × resulting val/test confusion (H1) | 2 h, local |
+| **E** | `nn_audit.csv` | Top-5 bank neighbours of each error's worst window, mapped through `train_windows.csv` to `sample_id`/domain/label | 1 day, **server** (faiss) |
+| **F** | `cases/<sample_id>.png` | The §3 figure rows | 3 h, after E |
+| **G** | `suspect_cross_check.csv` | Persistent errors × Analyzer suspect score (H5) | 2 h, local |
+| **H** | `method_overlap.csv` | Cross-method error overlap. Measured already: PatchCore∩SVM 29, PatchCore∩EfficientAD 16, **all three only 6** | done in draft, 1 h to finalize |
+| **I** | `bootstrap.json` | Date-level bootstrap CI for every method (H6) | 1 h, local |
+| **J** | `phi_q_n/<sample_id>.png` + `prpd_pattern.py` | φ-q-n renderer (phase × amplitude × count) used by every figure; the supervisor's 2D view | 3 h, local |
+| **K** | `tsne_errors.png` | Test files on the Analyzer's 2D t-SNE of the 256-D feature, coloured by class, errors marked — shows whether errors sit between the clusters or inside the wrong one | 2 h, local |
+| **L** | `phi_q_n_stats.csv` | Classic PD descriptors per file (per half-cycle: pulse count, mean/max amplitude, skewness, kurtosis, phase asymmetry, cross-correlation), compared error vs correct | 3 h, local |
+| **M** | `literature_patterns.md` | Canonical φ-q-n signatures per fault type from the PD literature, with each error case judged against its labelled class | 3 h + reading |
 
-Steps 1–4 are local and need no GPU. Only E needs the server.
+## Order
 
----
+1. A, B, H → substrate and the §1/§2 numbers (2–3 h)
+2. I → which differences are even real (1 h)
+3. D → biggest identified mechanism (2 h)
+4. C → threshold transfer (2 h)
+5. **J, K → the 2D views the supervisor asked for; K is cheap and may explain the error geometry immediately** (5 h, local)
+6. E, F → the "why" and the §3 figure (1 day, server)
+7. L, M → PD-domain descriptors and the literature comparison, for the discussion section (1 day)
+8. G → feeds the data-quality track (2 h)
 
-## 5. Pitfalls specific to this dataset
+## Pitfalls
 
-- **Never tune on test.** Every rule change in D or C is chosen on val, then applied once to test. The plan's
-  numbers above are diagnostic, not selection criteria.
-- **Dates, not files, are the unit.** 229 test files come from 35 dates, and one date can be 32 files. Any
-  per-file statistic or bootstrap that ignores this overstates significance.
-- **Seed noise is large** (E4). Report every error statistic across all three seeds, or say which seed it is.
-- **Small cells.** Corona n=6 and Particle n=1 in test. A per-fault-type error rate on those is anecdote.
-- **`unknown_date` files are all in train**, so they never appear in this analysis, but they are ~45% of Field
-  data. Fixing the date parser (results plan §6) would change the error picture more than any model change.
-- **Label noise is real** (23 files already relabelled). Treat H5 as a genuine possibility, not an excuse.
+- **Never tune on test.** Rule changes in C and D are chosen on val, applied once to test.
+- **Dates, not files, are the sampling unit.** 229 files come from 35 dates; one date can be 32 files.
+- **Seed noise is large.** 61 / 30 / 54 errors across seeds; quote the seed or report all three.
+- **Tiny cells.** Corona n=6, Particle n=1 in test — anecdote, not rate.
+- **`unknown_date` files (≈45% of Field data) are all in train**, so they never appear in this analysis.
+- **Label noise is real** (23 files relabelled) — H5 is a genuine possibility, not an excuse.
 
----
+## What "done" looks like
 
-## 6. What a good outcome looks like
-
-By the end you should be able to state, with numbers:
-
-1. **What kind of error dominates** — currently false-PD calls on two unfamiliar noise dates.
-2. **Which mechanism causes it** — aggregation (H1), threshold scale (H2), bank coverage (H3/H4), or labels (H5).
-3. **Whether it is fixable within PatchCore** — and if yes, the fix was chosen on val and verified once on test.
-4. **How much of the remaining error is irreducible noise** at this test-set size (H6/I).
-
-That is enough for an honest error-analysis section, whether or not the fixes land.
+Able to state, with numbers: which error type dominates and at which threshold; which mechanism causes it;
+whether it is fixable inside PatchCore (fix chosen on val, verified once on test); and how much residual error is
+irreducible at this test-set size.

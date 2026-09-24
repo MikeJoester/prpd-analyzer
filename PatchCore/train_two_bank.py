@@ -85,12 +85,17 @@ def main() -> None:
 
     loader = make_loader(WindowDataset(args.data_root, rows, args.image_size), args.batch_size, args.workers)
     print(f"[{args.cls}] {rows['sample_id'].nunique()} files, {len(rows)} windows -> fitting", flush=True)
-    fill_memory_bank_prealloc(model, loader, len(rows))  # same result as model.fit(loader), half the peak RAM
+    pool_idx, patches_per_window = fill_memory_bank_prealloc(model, loader, len(rows))  # = model.fit(loader), half the RAM
 
     bank_dir = args.out / f"bank_{args.cls}"
     bank_dir.mkdir(parents=True, exist_ok=False)
     model.save_to_path(str(bank_dir))
     rows[["image_path", "sample_id", "window_idx", "domain", "label"]].to_csv(bank_dir / "train_windows.csv", index=False)
+    if pool_idx is not None:
+        # Each bank entry came from one patch of one training window: pool row // patches-per-window.
+        src = rows.iloc[pool_idx // patches_per_window][["sample_id", "window_idx", "domain", "label"]]
+        src.insert(0, "bank_entry", np.arange(len(src)))
+        src.to_csv(bank_dir / "bank_entry_source.csv", index=False)
 
     bank_size = int(model.anomaly_scorer.nn_method.search_index.ntotal)
     info = {

@@ -90,6 +90,15 @@ class ChunkedApproxGreedyCoreset(patchcore.sampler.ApproximateGreedyCoresetSampl
     """
 
     chunk = 500_000
+    last_indices = None  # pool rows kept by the coreset, so bank entries can be traced to training windows
+
+    def run(self, features):
+        import numpy as _np
+        feats = torch.from_numpy(features) if isinstance(features, _np.ndarray) else features
+        reduced = self._reduce_features(feats)
+        idx = self._compute_greedy_coreset_indices(reduced)
+        self.last_indices = _np.asarray(idx)
+        return features[self.last_indices]
 
     def _reduce_features(self, features: torch.Tensor) -> torch.Tensor:
         if features.shape[1] == self.dimension_to_project_features_to:
@@ -146,6 +155,8 @@ def fill_memory_bank_prealloc(model: patchcore.patchcore.PatchCore, loader, n_wi
     if row != len(pool):
         raise RuntimeError(f"filled {row} of {len(pool)} feature rows")
     features = model.featuresampler.run(pool)
+    patches_per_window = len(pool) // n_windows
     del pool
     model.anomaly_scorer.fit(detection_features=[features])
+    return getattr(model.featuresampler, "last_indices", None), patches_per_window
 

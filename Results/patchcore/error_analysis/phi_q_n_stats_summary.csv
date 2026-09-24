@@ -1,0 +1,5 @@
+cls,error_kind,pos_pulse_count,pos_mean_amplitude,pos_max_amplitude,pos_amp_skewness,pos_amp_kurtosis,pos_active_phase_bins,neg_pulse_count,neg_mean_amplitude,neg_max_amplitude,neg_amp_skewness,neg_amp_kurtosis,neg_active_phase_bins,count_asymmetry,amplitude_asymmetry,half_cycle_cross_correlation,total_pulses,occupied_cells
+Noise,correct,11883.0,19.345,100.0,0.809,0.213,64.0,6742.0,16.179,92.0,1.839,2.619,64.0,-0.005,0.976,0.353,18747.0,2435.0
+Noise,false alarm,1248.0,34.051,125.0,0.671,0.988,64.0,2959.0,31.941,114.0,1.085,0.467,64.0,-0.01,0.986,0.574,4334.0,1396.0
+PD,correct,16841.0,16.894,104.0,1.731,11.679,64.0,17305.0,16.835,121.0,2.612,10.236,64.0,0.0,1.021,0.844,34086.0,5147.0
+PD,missed PD,3567.0,60.159,119.5,0.155,0.196,55.0,825.0,21.554,112.0,0.826,-0.253,51.5,0.0,0.976,0.68,3787.0,1433.5
