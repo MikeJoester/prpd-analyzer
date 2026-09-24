@@ -20,6 +20,9 @@ called PD. The decision threshold is chosen on val.
    close to the threshold.
 5. **The 10 persistent errors split into two distinct causes** — 3 atypical Corona (label-quality candidates)
    and 7 textbook Void files the model simply misses.
+6. **The mechanism is bank ambiguity on quiet files.** Missed PD are not far from the PD bank; the *difference*
+   between the two banks collapses (gap 0.925 → 0.152). Missed PD also match Lab rather than Field training
+   windows (0.8 vs 0.2), confirming the Lab-dominated bank as a contributing cause.
 
 ---
 
@@ -81,6 +84,45 @@ neighbourhood that is majority PD — they are genuinely PD-like in the 256-D fe
 **Margin.** Median |score − threshold| is 0.035 for errors vs 0.131 for correct files; the half of files nearest
 the threshold carries a 40% error rate against 13% for the far half.
 
+## §3b Which training windows the model matched (E)
+
+The memory banks were rebuilt recording, for every bank entry, the training window it came from
+(`bank_entry_source.csv`). For each test file the window that drove its decision was then queried against both
+banks and its top-5 neighbours traced back.
+
+**PD files** (their most PD-like window):
+
+| | files | Lab share of neighbours | dist to PD bank | dist to Noise bank | **gap** |
+|---|---:|---:|---:|---:|---:|
+| caught | 57 | 0.2 | 1.787 | 2.828 | **0.925** |
+| missed | 18 | **0.8** | 1.628 | 1.733 | **0.152** |
+
+**Noise files** (their most Noise-like window):
+
+| | files | dist to PD bank | dist to Noise bank | gap |
+|---|---:|---:|---:|---:|
+| correct | 111 | 1.861 | 2.064 | +0.124 |
+| false alarm | 43 | 1.992 | 1.772 | −0.166 |
+
+Two findings:
+
+1. **H4 confirmed.** Missed PD files match Lab training windows (mean Lab share 0.70) while caught PD files
+   match Field windows (0.31), p = 6e-5. The Lab-heavy PD bank (1,435 Lab vs 348 Field files) is the wrong
+   reference for the field measurements it is asked to recognise.
+2. **The real mechanism is bank ambiguity, not distance.** Missed PD files are *not* far from the PD bank —
+   they are slightly **closer** to it than caught files (1.628 vs 1.787). What collapses is the *difference*
+   between the two banks: the gap falls from 0.925 to 0.152 (p = 1e-6). Noise false alarms show the mirror
+   image, with the gap going slightly negative.
+
+This ties the whole analysis together with the activity finding: **quiet files produce near-empty windows, and
+near-empty windows are well covered by both banks.** Both distances shrink, their difference collapses toward
+zero, the file lands next to the threshold, and the seed or the threshold decides the label. That is why errors
+are quiet (§3), near the threshold (§3), seed-unstable (§1), and method-specific (§2).
+
+> Caveat: the window chosen per file depends on its predicted class (most Noise-like for false alarms, most
+> PD-like otherwise), so the "which bank is closer" column is partly determined by that choice. The Lab/Field
+> neighbour share and the gap comparison are made **within** the same selection rule and are not affected.
+
 ## §4 Hypotheses — what survived
 
 | # | Hypothesis | Verdict | Evidence |
@@ -88,7 +130,7 @@ the threshold carries a 40% error rate against 13% for the far half.
 | **H1** | Aggregation dilutes bursty PD | **Rejected** | Every alternative rule is worse on val. `mean` 0.959 val AUROC; `min` 0.916; `max` 0.907; "PD if ≥3 of 28 windows look PD" 0.752 and 124 false alarms. Noise files contain PD-like windows too, so sensitivity to any single window is fatal. |
 | **H2** | Bank distance scales differ | **Not supported** | Rank-normalizing each bank against its val distribution changes AUROC by −0.044 / +0.023 / +0.028 across seeds (median 0.853 → 0.844). It does lift macro F1 at the val threshold for 2 of 3 seeds (0.718 → 0.755, 0.727 → 0.738), so it helps threshold transfer slightly, not ranking. |
 | **H3** | Unfamiliar noise environment | **Supported** | 32 of 61 errors come from two Field-Noise dates never seen in training, with 63% and 50% error rates on those dates. |
-| **H4** | PD bank is Lab-dominated | Pending | Nearest-neighbour audit (Analysis E) still running. |
+| **H4** | PD bank is Lab-dominated | **Supported** | Missed PD files match **Lab** training windows (median 0.8 of their top-5 PD-bank neighbours) while correctly-caught PD files match **Field** windows (0.2); Mann-Whitney p = 6e-5. See §3b. |
 | **H5** | Some errors are label errors | **Partly supported** | See below. |
 | **H6** | Much of the error is sampling noise | **Confirmed** | Only 10 of 229 files are wrong in all three seeds; 53 are wrong in exactly one. Bootstrap CI ±0.12. |
 
@@ -112,8 +154,10 @@ The plan's priority list changes, because H1 is dead and H2 is weak:
 3. **Fix the data, not the model.** The dominant error source is two unseen field-noise environments, and 690
    Field files are excluded from val/test only because their dates cannot be parsed. Recovering those dates
    (their filenames carry epoch-ms timestamps) is worth more than any hyperparameter.
-4. **Keep rank normalization as an operating-point fix only**, with the caveat that it does not improve ranking.
-5. **Send the 3 Corona files to review**, and treat the 7 Void misses as the model-failure case study for §4.
+4. **Rebalance the PD bank toward Field** (`--k-field` in the fine-tuning plan). This is now the best-supported
+   model-side change: missed PD match Lab windows 0.8 of the time, caught PD only 0.2.
+5. **Keep rank normalization as an operating-point fix only**, with the caveat that it does not improve ranking.
+6. **Send the 3 Corona files to review**, and treat the 7 Void misses as the model-failure case study for §4.
 
 ## Reproduce
 
@@ -123,3 +167,10 @@ python Comparison/error_figures.py      # J, K, L  (t-SNE, phi-q-n stats, case f
 # on the GPU server, after rebuilding banks with coreset provenance:
 python Comparison/nn_audit.py --run Results/patchcore/nnaudit_k8_s42   # E
 ```
+
+## Engineering note
+
+Rebuilding both banks in parallel at K=8 needs 45.8 GB (PD) + 22.5 GB (Noise) of feature pool and was
+OOM-killed once on the 125 GB server; the earlier run had fit only marginally (47.9 + 24.8 GB peak RSS).
+**At K=8 with layer2+layer3, build the banks with `SEQUENTIAL=1`.** The rebuilt banks reproduced the original
+sizes exactly (111,829 PD / 54,942 Noise entries), so the coreset is deterministic given the seed.

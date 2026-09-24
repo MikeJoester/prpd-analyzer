@@ -141,7 +141,7 @@ Val AUROC, 3 seeds, median [min, max]. Adopt only if the gain clears the spread.
 
 | Setting | Host RAM (PD bank) | GPU | Note |
 |---|---|---|---|
-| K=8, dim 1024 (current) | 48 GB | 6 GB | Both banks in parallel is fine |
+| K=8, dim 1024 (current) | 48 GB (PD) + 25 GB (Noise) | 6 GB | **Use `SEQUENTIAL=1`** — parallel builds were OOM-killed once at this size |
 | K=16, dim 1024 | ~90 GB | 6 GB | Use `SEQUENTIAL=1` |
 | K=28, dim 1024 | ~160 GB | 6 GB | **Won't fit.** Needs `--target-dim 512` or `SEQUENTIAL=1` + dim 512 |
 | layer1 included, batch 64 | – | OOM | Use `--batch-size 16` |
