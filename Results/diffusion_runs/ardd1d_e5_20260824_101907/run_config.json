@@ -1,0 +1,158 @@
+{
+  "seed": 42,
+  "run_prefix": "ardd1d_e5",
+  "notes": "E5 — 논문(ARDD-2025) 구성을 전부 켠 설정. A1(linear beta 1e-4~0.02) + A2(ardd_resid) + A3(morph_attn). E1(configs/ardd1d_base.json)과 데이터·분할·노이즈·지표가 동일해야 비교가 성립한다(DIFFUSION.md 18.1).",
+  "data": {
+    "ai_data_root": "artifacts\\ai_data_20260821_160405",
+    "memmap_cache": "artifacts/repr_cache",
+    "profile_cache": "artifacts/profile_cache",
+    "representation": "profile_v1",
+    "use_profile_cache": true,
+    "realizations_per_file": 8,
+    "samples_per_file": 4,
+    "clean_groups": [
+      "Lab PD"
+    ],
+    "noise_groups": [],
+    "real_noisy_groups": [
+      "Field PD"
+    ],
+    "clean_labels": null
+  },
+  "split": {
+    "ratios": {
+      "train": 0.7,
+      "val": 0.15,
+      "test": 0.15
+    },
+    "scope": "global"
+  },
+  "noise": {
+    "kind": "cin",
+    "mode": "maximum",
+    "gain_min": 0.6,
+    "gain_max": 1.4,
+    "dropout_probability": 0.05
+  },
+  "cin": {
+    "white_sigma": 6.0,
+    "pink_sigma": 4.0,
+    "harmonic_amplitudes": [
+      10.0,
+      4.0,
+      2.0
+    ],
+    "harmonic_orders": [
+      1,
+      3,
+      5
+    ],
+    "harmonic_axis": "phase",
+    "pink_axis": "time",
+    "randomize_harmonic_phase": true,
+    "target_snr_db": null
+  },
+  "model": {
+    "base_channels": 64,
+    "channel_multipliers": [
+      1,
+      2,
+      4
+    ],
+    "blocks_per_stage": 2,
+    "attention_stages": [
+      2
+    ],
+    "dropout": 0.0,
+    "padding_mode": "circular"
+  },
+  "components": {
+    "ardd_resid": true,
+    "ardd_alpha": 0.5,
+    "ardd_entropy_window": 9,
+    "ardd_entropy_bins": 16,
+    "ardd_entropy_source": "condition",
+    "ardd_invert_entropy": false,
+    "morph_attn": true,
+    "morph_scales": [
+      1,
+      3,
+      7
+    ],
+    "morph_normalize": "none"
+  },
+  "diffusion": {
+    "schedule": "linear",
+    "timesteps": 1000,
+    "loss_type": "l2"
+  },
+  "train": {
+    "epochs": 200,
+    "batch_size": 64,
+    "learning_rate": 0.0002,
+    "ema_decay": 0.999,
+    "grad_clip": 1.0,
+    "num_workers": 0,
+    "max_steps": 0
+  },
+  "sample": {
+    "steps": 50,
+    "eta": 0.0,
+    "batch_size": 64,
+    "max_files": 128
+  },
+  "algorithm": {
+    "kind": "ardd1d",
+    "representation": "profile_v1",
+    "noise_model": "cin",
+    "schedule": "linear",
+    "components": {
+      "ardd_resid": {
+        "alpha": 0.5,
+        "entropy_window": 9,
+        "entropy_bins": 16,
+        "entropy_source": "condition",
+        "invert_entropy": false
+      },
+      "morph_attn": {
+        "scales": [
+          1,
+          3,
+          7
+        ],
+        "normalize": "none"
+      }
+    }
+  },
+  "feature_input_exception": true,
+  "feature_input_exception_reason": "이 트랙은 Analyzer의 256차원 mean/max feature를 딥러닝 입력으로 사용한다. `claude.md` 11절의 '256 feature를 딥러닝 입력으로 쓰지 않는다' 규칙에 대한 명시적 예외이며, 논문(ARDD-2025)과 같은 1차원 신호에서 기법을 검증하려는 목적이다. 이 트랙의 복원 출력은 raw tensor로 되돌릴 수 없으므로 분류·이상탐지 트랙의 입력으로 넘기지 않는다.",
+  "ai_data_root_resolved": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+  "raw_data_version": "raw_v1",
+  "config_hash": "b928da207135",
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "torch": "2.11.0+cu128",
+    "cuda_available": true,
+    "cuda_device": "NVIDIA GeForce RTX 5080"
+  },
+  "synthesis_check": {
+    "source": "artifacts\\diffusion_runs\\ardd1d_synth_check.json",
+    "verdict": "어떤 설정도 기준선(Lab PD ↔ Field PD)보다 5% 이상 가깝지 않다. 이후 학습 결과는 모두 '합성 노이즈 한정'으로 표기해야 한다.",
+    "baseline_frechet": 36.60436219647304,
+    "baseline_mmd": 0.007612975846252534,
+    "diagnosis": {
+      "lab_mean_channel": 3.869605302810669,
+      "field_mean_channel": 2.974247694015503,
+      "lab_max_channel": 121.41605377197266,
+      "field_max_channel": 127.07718658447266,
+      "mean_channel_gap": -0.895357608795166,
+      "max_channel_gap": 5.6611328125,
+      "interpretation": "Field PD는 Lab PD보다 mean profile이 낮고 max profile이 높다. 즉 시간축에서 더 드물지만 더 큰 펄스를 낸다. 음수가 없는 노이즈를 섞으면 두 채널이 함께 올라가므로 이 차이를 재현할 수 없다 — Lab→Field 격차는 '노이즈 바닥' 차이가 아니다."
+    },
+    "synthesis_limited": true
+  },
+  "synthesis_limited": true
+}

@@ -1,0 +1,1 @@
+VAL_ONLY=1 PatchCore/run_two_bank.sh e2_resnet50 --backbone resnet50 -- --splits val

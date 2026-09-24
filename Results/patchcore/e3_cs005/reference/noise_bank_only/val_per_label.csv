@@ -1,0 +1,5 @@
+cls,label,files,correct,recall
+Noise,Noise,155,63,0.4064516129032258
+PD,Corona,1,0,0.0
+PD,Floating,9,6,0.6666666666666666
+PD,Void,65,54,0.8307692307692308

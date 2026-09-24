@@ -1,0 +1,51 @@
+{
+  "run": "ardd1d_smoke_20260824_094602",
+  "config_hash": "60fe3969158a",
+  "algorithm": {
+    "kind": "ardd1d",
+    "representation": "profile_v1",
+    "noise_model": "cin",
+    "schedule": "cosine",
+    "components": {
+      "ardd_resid": {
+        "alpha": 0.5,
+        "entropy_window": 9,
+        "entropy_bins": 16,
+        "entropy_source": "condition",
+        "invert_entropy": false
+      },
+      "morph_attn": {
+        "scales": [
+          1,
+          3
+        ],
+        "normalize": "none"
+      }
+    }
+  },
+  "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+  "raw_data_version": "raw_v1",
+  "feature_input_exception": true,
+  "paired": {
+    "mean_profile_mae": 126.11122940100392,
+    "mean_profile_psnr": 3.8181067766585874,
+    "max_profile_mae": 130.6911748945713,
+    "max_profile_psnr": 4.8440298095751935,
+    "baseline_mean_profile_mae": 5.8957842136663885,
+    "mean_profile_mae_improvement": -120.21544518733754,
+    "baseline_mean_profile_psnr": 32.10864375622751,
+    "baseline_max_profile_mae": 1.853515625,
+    "max_profile_mae_improvement": -128.8376592695713,
+    "baseline_max_profile_psnr": 29.73506575783546,
+    "files": 8,
+    "improved_channels": []
+  },
+  "distribution": {
+    "frechet_before": 454.224483275795,
+    "frechet_after": 39068.10028390019,
+    "mmd_before": 0.25135415975034076,
+    "mmd_after": 0.4799383018814994,
+    "reference_files": 64,
+    "evaluated_files": 8
+  }
+}

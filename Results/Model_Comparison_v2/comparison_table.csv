@@ -1,0 +1,7 @@
+Method,Seeds,Image AUROC,Window AUROC (replaces pixel),Optimal F1,Precision,Recall,Pixel AUROC
+"PatchCore (WRN-50 L2+L3, K=8)",3,"0.853 [0.816, 0.872]","0.811 [0.797, 0.823]","0.799 [0.774, 0.863]","0.870 [0.828, 0.896]","0.774 [0.754, 0.844]",N/A (no pixel ground truth)
+EfficientAD (K=8),3,"0.724 [0.604, 0.736]","0.691 [0.500, 0.747]","0.672 [0.652, 0.697]","0.693 [0.668, 0.694]","0.714 [0.645, 0.719]",N/A (no pixel ground truth)
+One-Class SVM (K=8),3,"0.598 [0.597, 0.616]","0.671 [0.667, 0.677]","0.594 [0.590, 0.626]","0.626 [0.608, 0.637]","0.640 [0.623, 0.655]",N/A (no pixel ground truth)
+Baseline: 256-D kNN-5,1,0.860,n/a,0.796,0.797,0.795,N/A (no pixel ground truth)
+Baseline: 256-D Mahalanobis,1,0.494,n/a,0.565,0.768,0.584,N/A (no pixel ground truth)
+Baseline: always Noise,1,0.500,0.500,0.402,0.336,0.500,N/A (no pixel ground truth)

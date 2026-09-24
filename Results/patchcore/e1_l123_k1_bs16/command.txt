@@ -1,0 +1,1 @@
+VAL_ONLY=1 PatchCore/run_two_bank.sh e1_l123_k1_bs16 --layers layer1 layer2 layer3 --k 1 --batch-size 16 -- --batch-size 16 --splits val

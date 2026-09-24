@@ -1,0 +1,8 @@
+{
+  "checkpoint": "best.pt",
+  "ddim_steps": 50,
+  "eta": 0.0,
+  "seed": 42,
+  "device": "cuda",
+  "realization_index": 0
+}

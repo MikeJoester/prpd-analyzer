@@ -1,0 +1,17 @@
+{
+  "aggregation": "mean",
+  "val_auroc": 0.9574,
+  "val_macro_f1": 0.9028,
+  "val_balanced_acc": 0.8905,
+  "val_auroc_by_aggregation": {
+    "mean": 0.9574,
+    "median": 0.9483,
+    "max": 0.8789,
+    "min": 0.9088,
+    "p90": 0.8822
+  },
+  "single_bank_val_auroc": {
+    "pd_bank_only": 0.7542,
+    "noise_bank_only": 0.4991
+  }
+}

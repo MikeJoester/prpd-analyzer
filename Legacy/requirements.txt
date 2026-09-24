@@ -1,0 +1,9 @@
+keras==3.4.1
+tensorflow==2.19.0
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.5.2
+keras==3.4.1
+cudatoolkit=11.2.2
+cudnn=8.9.7
+https://medium.com/nerd-for-tech/installing-tensorflow-with-gpu-acceleration-on-linux-f3f55dd15a9#6ff5

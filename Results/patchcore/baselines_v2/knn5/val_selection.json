@@ -1,0 +1,47 @@
+{
+  "aggregation": "mean",
+  "threshold": 0.1945019376964594,
+  "val_auroc_by_aggregation": {
+    "mean": 0.856,
+    "median": 0.856,
+    "max": 0.856,
+    "min": 0.856,
+    "p90": 0.856
+  },
+  "val_metrics": {
+    "n_files": 230,
+    "n_pd": 75,
+    "n_noise": 155,
+    "auroc": 0.856,
+    "macro_f1": 0.7708980795282492,
+    "balanced_accuracy": 0.8008602150537635,
+    "accuracy": 0.782608695652174,
+    "per_class": {
+      "PD": {
+        "precision": 0.6213592233009708,
+        "recall": 0.8533333333333334,
+        "f1": 0.7191011235955056,
+        "support": 75
+      },
+      "Noise": {
+        "precision": 0.9133858267716536,
+        "recall": 0.7483870967741936,
+        "f1": 0.8226950354609929,
+        "support": 155
+      }
+    },
+    "confusion_matrix": {
+      "rows_true_[PD,Noise]": [
+        [
+          64,
+          11
+        ],
+        [
+          39,
+          116
+        ]
+      ]
+    },
+    "threshold": 0.1945019376964594
+  }
+}

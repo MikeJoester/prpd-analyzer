@@ -1,0 +1,81 @@
+{
+  "runs": [
+    {
+      "run": "ardd1d_e1_20260824_095128",
+      "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+      "raw_data_version": "raw_v1",
+      "config_hash": "dafaa41e134f",
+      "split_config": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\diffusion_runs\\ardd1d_e1_20260824_095128\\split_config.json"
+    },
+    {
+      "run": "ardd1d_e1s43_20260824_103840",
+      "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+      "raw_data_version": "raw_v1",
+      "config_hash": "db24004d4692",
+      "split_config": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\diffusion_runs\\ardd1d_e1s43_20260824_103840\\split_config.json"
+    },
+    {
+      "run": "ardd1d_e1s44_20260824_104537",
+      "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+      "raw_data_version": "raw_v1",
+      "config_hash": "c3e6c0dc3044",
+      "split_config": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\diffusion_runs\\ardd1d_e1s44_20260824_104537\\split_config.json"
+    },
+    {
+      "run": "ardd1d_e2_20260824_095522",
+      "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+      "raw_data_version": "raw_v1",
+      "config_hash": "86fe7bdff1d1",
+      "split_config": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\diffusion_runs\\ardd1d_e2_20260824_095522\\split_config.json"
+    },
+    {
+      "run": "ardd1d_e2s43_20260824_105210",
+      "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+      "raw_data_version": "raw_v1",
+      "config_hash": "7b2a5f7dd2c1",
+      "split_config": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\diffusion_runs\\ardd1d_e2s43_20260824_105210\\split_config.json"
+    },
+    {
+      "run": "ardd1d_e2s44_20260824_111020",
+      "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+      "raw_data_version": "raw_v1",
+      "config_hash": "29fc116ab34d",
+      "split_config": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\diffusion_runs\\ardd1d_e2s44_20260824_111020\\split_config.json"
+    },
+    {
+      "run": "ardd1d_e3_20260824_100254",
+      "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+      "raw_data_version": "raw_v1",
+      "config_hash": "e67e389e7c5f",
+      "split_config": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\diffusion_runs\\ardd1d_e3_20260824_100254\\split_config.json"
+    },
+    {
+      "run": "ardd1d_e4_20260824_101147",
+      "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+      "raw_data_version": "raw_v1",
+      "config_hash": "d9604a6d6337",
+      "split_config": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\diffusion_runs\\ardd1d_e4_20260824_101147\\split_config.json"
+    },
+    {
+      "run": "ardd1d_e5_20260824_101907",
+      "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+      "raw_data_version": "raw_v1",
+      "config_hash": "b928da207135",
+      "split_config": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\diffusion_runs\\ardd1d_e5_20260824_101907\\split_config.json"
+    },
+    {
+      "run": "ardd1d_e5s43_20260824_105901",
+      "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+      "raw_data_version": "raw_v1",
+      "config_hash": "56403ee8d291",
+      "split_config": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\diffusion_runs\\ardd1d_e5s43_20260824_105901\\split_config.json"
+    },
+    {
+      "run": "ardd1d_e5s44_20260824_111649",
+      "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+      "raw_data_version": "raw_v1",
+      "config_hash": "3c79bf2e2abe",
+      "split_config": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\diffusion_runs\\ardd1d_e5s44_20260824_111649\\split_config.json"
+    }
+  ]
+}

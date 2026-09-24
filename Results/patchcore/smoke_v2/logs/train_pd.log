@@ -1,0 +1,15 @@
+/home/oem/anaconda3/envs/danenv/lib/python3.11/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/oem/anaconda3/envs/danenv/lib/python3.11/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=Wide_ResNet50_2_Weights.IMAGENET1K_V1`. You can also use `weights=Wide_ResNet50_2_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+[pd] 89 files, 356 windows -> fitting
+
+Computing support features...:   0%|          | 0/6 [00:00<?, ?it/s][A
+Computing support features...:  17%|█▋        | 1/6 [00:01<00:08,  1.69s/it][A
+Computing support features...:  33%|███▎      | 2/6 [00:02<00:05,  1.39s/it][A
+Computing support features...:  50%|█████     | 3/6 [00:04<00:03,  1.32s/it][A
+Computing support features...:  67%|██████▋   | 4/6 [00:05<00:02,  1.19s/it][A
+Computing support features...:  83%|████████▎ | 5/6 [00:06<00:01,  1.14s/it][A
+Computing support features...: 100%|██████████| 6/6 [00:06<00:00,  1.07it/s][A
+                                                                            [ASubsampling...:   0%|          | 0/2791 [00:00<?, ?it/s]Subsampling...:   7%|▋         | 183/2791 [00:00<00:01, 1829.80it/s]Subsampling...:  14%|█▍        | 384/2791 [00:00<00:01, 1932.63it/s]Subsampling...:  21%|██        | 585/2791 [00:00<00:01, 1966.44it/s]Subsampling...:  28%|██▊       | 786/2791 [00:00<00:01, 1982.32it/s]Subsampling...:  35%|███▌      | 987/2791 [00:00<00:00, 1990.43it/s]Subsampling...:  43%|████▎     | 1188/2791 [00:00<00:00, 1995.47it/s]Subsampling...:  50%|████▉     | 1389/2791 [00:00<00:00, 1999.68it/s]Subsampling...:  57%|█████▋    | 1591/2791 [00:00<00:00, 2003.52it/s]Subsampling...:  64%|██████▍   | 1792/2791 [00:00<00:00, 2003.44it/s]Subsampling...:  71%|███████▏  | 1993/2791 [00:01<00:00, 2002.60it/s]Subsampling...:  79%|███████▊  | 2194/2791 [00:01<00:00, 1997.89it/s]Subsampling...:  86%|████████▌ | 2395/2791 [00:01<00:00, 2001.25it/s]Subsampling...:  93%|█████████▎| 2596/2791 [00:01<00:00, 2002.17it/s]Subsampling...: 100%|██████████| 2791/2791 [00:01<00:00, 1992.44it/s]
+{"train_files": 89, "train_windows": 356, "memory_bank_size": 2791, "peak_gpu_mem_gb": 6.02, "seconds": 10.8}

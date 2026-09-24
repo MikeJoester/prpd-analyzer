@@ -1,0 +1,48 @@
+{
+  "run": "ardd1d_e4_20260824_101147",
+  "config_hash": "d9604a6d6337",
+  "algorithm": {
+    "kind": "ardd1d",
+    "representation": "profile_v1",
+    "noise_model": "cin",
+    "schedule": "linear",
+    "components": {
+      "ardd_resid": {
+        "alpha": 0.5,
+        "entropy_window": 9,
+        "entropy_bins": 16,
+        "entropy_source": "condition",
+        "invert_entropy": false
+      }
+    }
+  },
+  "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+  "raw_data_version": "raw_v1",
+  "feature_input_exception": true,
+  "synthesis_limited": true,
+  "synthesis_check_verdict": "어떤 설정도 기준선(Lab PD ↔ Field PD)보다 5% 이상 가깝지 않다. 이후 학습 결과는 모두 '합성 노이즈 한정'으로 표기해야 한다.",
+  "paired": {
+    "mean_profile_mae": 2.328179518693382,
+    "mean_profile_psnr": 36.174107927673916,
+    "max_profile_mae": 3.5909810680313967,
+    "max_profile_psnr": 30.559338728327713,
+    "baseline_mean_profile_mae": 6.793489018936469,
+    "mean_profile_mae_improvement": 4.465309500243087,
+    "baseline_mean_profile_psnr": 30.392523728025594,
+    "baseline_max_profile_mae": 3.4493408203125,
+    "max_profile_mae_improvement": -0.14164024771889672,
+    "baseline_max_profile_psnr": 27.522290361936044,
+    "files": 128,
+    "improved_channels": [
+      "mean"
+    ]
+  },
+  "distribution": {
+    "frechet_before": 107.50174349748715,
+    "frechet_after": 158.18870595374892,
+    "mmd_before": 0.058636197455088745,
+    "mmd_after": 0.08573766082542034,
+    "reference_files": 64,
+    "evaluated_files": 46
+  }
+}

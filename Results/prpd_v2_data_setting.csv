@@ -1,0 +1,5 @@
+split,Lab PD,Lab Noise,Field PD,Field Noise,PD,Noise,files,dates,windows
+train,1435,156,348,720,1783,876,2659,46,74452
+val,0,0,75,155,75,155,230,33,6440
+test,0,0,75,154,75,154,229,35,6412
+total,1435,156,498,1029,1933,1185,3118,114,87304

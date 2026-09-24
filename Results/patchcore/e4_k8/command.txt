@@ -1,0 +1,1 @@
+VAL_ONLY=1 PatchCore/run_two_bank.sh e4_k8 --k 8 -- --splits val

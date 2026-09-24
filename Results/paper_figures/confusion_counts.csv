@@ -1,0 +1,43 @@
+threshold_kind,method,seed,true,pred_PD,pred_Noise
+optimal,PatchCore,42,PD,43,32
+optimal,PatchCore,42,Noise,4,150
+optimal,PatchCore,42,Corona,0,6
+optimal,PatchCore,42,Floating,15,2
+optimal,PatchCore,42,Particle,0,1
+optimal,PatchCore,42,Void,28,23
+optimal,PatchCore,42,Noise,4,150
+optimal,EfficientAD,44,PD,63,12
+optimal,EfficientAD,44,Noise,62,92
+optimal,EfficientAD,44,Corona,6,0
+optimal,EfficientAD,44,Floating,17,0
+optimal,EfficientAD,44,Particle,1,0
+optimal,EfficientAD,44,Void,39,12
+optimal,EfficientAD,44,Noise,62,92
+optimal,One-Class SVM,43,PD,57,18
+optimal,One-Class SVM,43,Noise,74,80
+optimal,One-Class SVM,43,Corona,6,0
+optimal,One-Class SVM,43,Floating,17,0
+optimal,One-Class SVM,43,Particle,0,1
+optimal,One-Class SVM,43,Void,34,17
+optimal,One-Class SVM,43,Noise,74,80
+val,PatchCore,42,PD,57,18
+val,PatchCore,42,Noise,43,111
+val,PatchCore,42,Corona,1,5
+val,PatchCore,42,Floating,15,2
+val,PatchCore,42,Particle,1,0
+val,PatchCore,42,Void,40,11
+val,PatchCore,42,Noise,43,111
+val,EfficientAD,44,PD,43,32
+val,EfficientAD,44,Noise,41,113
+val,EfficientAD,44,Corona,6,0
+val,EfficientAD,44,Floating,16,1
+val,EfficientAD,44,Particle,0,1
+val,EfficientAD,44,Void,21,30
+val,EfficientAD,44,Noise,41,113
+val,One-Class SVM,43,PD,38,37
+val,One-Class SVM,43,Noise,56,98
+val,One-Class SVM,43,Corona,6,0
+val,One-Class SVM,43,Floating,16,1
+val,One-Class SVM,43,Particle,0,1
+val,One-Class SVM,43,Void,16,35
+val,One-Class SVM,43,Noise,56,98

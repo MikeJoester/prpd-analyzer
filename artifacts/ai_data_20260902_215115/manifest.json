@@ -1,0 +1,61 @@
+{
+  "created_at": "2026-09-02T21:51:15.070169+09:00",
+  "files": [
+    {
+      "path": "ai_raw_dataset_v1.csv",
+      "size": 879066,
+      "sha256": "285e33a61233022839f6d56075d8448e57c25199e156cb59668a71f03cb0239d"
+    },
+    {
+      "path": "ai_raw_dataset_v1.parquet",
+      "size": 148590,
+      "sha256": "235b88b800ce33b1ed6a4d8ae0baa3d607babe1e070cbd851a5561b64d7db327"
+    },
+    {
+      "path": "dataset_description.txt",
+      "size": 1030,
+      "sha256": "623a85001bc248fb5765290f71bd3742c7893fd1b426ef38c839b3e6faedf6d6"
+    },
+    {
+      "path": "metadata.parquet",
+      "size": 148590,
+      "sha256": "235b88b800ce33b1ed6a4d8ae0baa3d607babe1e070cbd851a5561b64d7db327"
+    },
+    {
+      "path": "raw_tensors_v1/Field Noise.npz",
+      "size": 96642364,
+      "sha256": "ab11345f616325596096f3c63119e7ba3e23bcef1f510bc364df0d3602988069"
+    },
+    {
+      "path": "raw_tensors_v1/Field PD.npz",
+      "size": 29019013,
+      "sha256": "2f8e48b773644dba875e55ca9da32cd638d99ba5942fa7ffca1ee9400aa625cd"
+    },
+    {
+      "path": "raw_tensors_v1/Lab Noise.npz",
+      "size": 12217524,
+      "sha256": "046e5d071ad162c279c47885c57db009df65e41334864434cf4724e61f5440fe"
+    },
+    {
+      "path": "raw_tensors_v1/Lab PD.npz",
+      "size": 50204453,
+      "sha256": "21372d9ea9fadba72e028e8b114ac004e85b304babeaca274aabb3ba41eb1c2c"
+    },
+    {
+      "path": "raw_tensors_v1/Synthetic.npz",
+      "size": 29735,
+      "sha256": "318945741ce689def0b66db23a9fb0cadabc1c860e77f5efc95c8c5b263e2cae"
+    },
+    {
+      "path": "run_config.json",
+      "size": 629,
+      "sha256": "dab98dfa674ff64eeffd546ae4e1a689a2410ee1c80f57b0c0f0d9303f3b0447"
+    },
+    {
+      "path": "manifest.json",
+      "size": null,
+      "sha256": null,
+      "note": "manifest self-entry; checksum omitted to avoid recursive hashing"
+    }
+  ]
+}

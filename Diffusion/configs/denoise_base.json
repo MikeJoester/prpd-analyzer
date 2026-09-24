@@ -1,0 +1,54 @@
+{
+  "seed": 42,
+  "run_prefix": "denoise",
+  "notes": "Lab PD + 실측 노이즈 합성 pair로 학습하는 조건부 diffusion denoiser 기본 설정",
+  "data": {
+    "ai_data_root": "artifacts/ai_data_20260825_101830",
+    "memmap_cache": "artifacts/repr_cache",
+    "crop_width": 256,
+    "samples_per_file": 4,
+    "clean_groups": ["Lab PD"],
+    "noise_groups": ["Lab Noise", "Field Noise"],
+    "real_noisy_groups": ["Field PD"],
+    "clean_labels": null
+  },
+  "split": {
+    "ratios": { "train": 0.7, "val": 0.15, "test": 0.15 },
+    "scope": "global"
+  },
+  "noise": {
+    "mode": "maximum",
+    "gain_min": 0.6,
+    "gain_max": 1.4,
+    "phase_roll": true,
+    "time_roll": true,
+    "dropout_probability": 0.05
+  },
+  "model": {
+    "base_channels": 64,
+    "channel_multipliers": [1, 2, 4],
+    "blocks_per_stage": 2,
+    "attention_stages": [2],
+    "dropout": 0.0
+  },
+  "diffusion": {
+    "schedule": "cosine",
+    "timesteps": 1000,
+    "loss_type": "l2"
+  },
+  "train": {
+    "epochs": 100,
+    "batch_size": 16,
+    "learning_rate": 0.0001,
+    "ema_decay": 0.999,
+    "grad_clip": 1.0,
+    "num_workers": 0,
+    "max_steps": 0
+  },
+  "sample": {
+    "steps": 50,
+    "eta": 0.0,
+    "batch_size": 8,
+    "max_files": 32
+  }
+}

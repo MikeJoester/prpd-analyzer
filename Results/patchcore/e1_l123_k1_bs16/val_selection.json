@@ -1,0 +1,89 @@
+{
+  "aggregation": "mean",
+  "threshold": 0.06509079251970573,
+  "val_auroc_by_aggregation": {
+    "mean": 0.8891182795698925,
+    "median": 0.8770752688172043,
+    "max": 0.8594408602150537,
+    "min": 0.8842150537634409,
+    "p90": 0.8619354838709679
+  },
+  "val_metrics": {
+    "n_files": 230,
+    "n_pd": 75,
+    "n_noise": 155,
+    "auroc": 0.8891182795698925,
+    "macro_f1": 0.8051581325301205,
+    "balanced_accuracy": 0.7840860215053763,
+    "accuracy": 0.8434782608695652,
+    "per_class": {
+      "PD": {
+        "precision": 0.8679245283018868,
+        "recall": 0.6133333333333333,
+        "f1": 0.71875,
+        "support": 75
+      },
+      "Noise": {
+        "precision": 0.8361581920903954,
+        "recall": 0.9548387096774194,
+        "f1": 0.891566265060241,
+        "support": 155
+      }
+    },
+    "confusion_matrix": {
+      "rows_true_[PD,Noise]": [
+        [
+          46,
+          29
+        ],
+        [
+          7,
+          148
+        ]
+      ]
+    },
+    "threshold": 0.06509079251970573
+  },
+  "banks": {
+    "pd": {
+      "train_files": 1783,
+      "train_windows": 1783,
+      "memory_bank_size": 55914,
+      "settings": {
+        "backbone": "wideresnet50",
+        "layers": [
+          "layer1",
+          "layer2",
+          "layer3"
+        ],
+        "image_size": 224,
+        "pretrain_dim": 1024,
+        "target_dim": 1024,
+        "patchsize": 3,
+        "num_nn": 1
+      },
+      "coreset_ratio": 0.01
+    },
+    "noise": {
+      "train_files": 876,
+      "train_windows": 876,
+      "memory_bank_size": 27471,
+      "settings": {
+        "backbone": "wideresnet50",
+        "layers": [
+          "layer1",
+          "layer2",
+          "layer3"
+        ],
+        "image_size": 224,
+        "pretrain_dim": 1024,
+        "target_dim": 1024,
+        "patchsize": 3,
+        "num_nn": 1
+      },
+      "coreset_ratio": 0.01
+    }
+  },
+  "ai_data_root": "/home/dannt/Documents/DR_12/artifacts/ai_data_20260911_011704",
+  "raw_data_version": "raw_v2"
+}

@@ -1,0 +1,10 @@
+# Analyzer 기본 의존성(requirements.txt) 위에 추가로 필요한 항목.
+# GPU를 쓰려면 CUDA 빌드를 먼저 설치할 것:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu128
+# cu128을 쓰는 이유: 이 PC의 RTX 5080은 Blackwell(sm_120)이라 cu124 빌드에는 커널이 없다.
+# 설치 후 반드시 실제 커널 실행까지 확인할 것 (import 성공만으로는 부족하다):
+#   python -c "import torch; print(torch.cuda.get_device_capability()); print(torch.zeros(1).cuda())"
+#   → (12, 0) 이 나와야 한다. 확인된 조합: torch 2.11.0+cu128 / RTX 5080
+torch>=2.2
+tqdm
+pytest

@@ -1,0 +1,18 @@
+{
+  "method": "One-Class SVM K=8 (s44)",
+  "run": "Results/svm/ocsvm_v2_k8_s44",
+  "aggregation": "min",
+  "threshold": 0.09104407057443323,
+  "val_file_auroc": 0.9000430107526882,
+  "test_file_auroc": 0.6159307359307359,
+  "test_window_auroc": 0.6766586050004417,
+  "val_window_auroc": 0.8166159205617731,
+  "test_macro_f1": 0.6159007044615901,
+  "test_noise_f1": 0.6863468634686347,
+  "test_pd_f1": 0.5454545454545454,
+  "test_balanced_accuracy": 0.641948051948052,
+  "test_pd_recall": 0.68,
+  "test_noise_recall": 0.6038961038961039,
+  "pixel_auroc": null,
+  "pixel_auroc_note": "not measurable: no pixel-level ground truth; window-level AUROC reported instead"
+}

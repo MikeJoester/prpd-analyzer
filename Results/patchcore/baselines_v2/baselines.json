@@ -1,0 +1,31 @@
+{
+  "maha_pooled": {
+    "aggregation": "mean",
+    "val_auroc": 0.5204301075268817,
+    "test_auroc": 0.4942857142857143,
+    "test_macro_f1": 0.4457958423828731,
+    "test_balanced_accuracy": 0.44571428571428573
+  },
+  "knn5": {
+    "aggregation": "mean",
+    "val_auroc": 0.856,
+    "test_auroc": 0.8596536796536797,
+    "test_macro_f1": 0.6458560054985967,
+    "test_balanced_accuracy": 0.7199134199134198
+  },
+  "majority_noise": {
+    "val": {
+      "auroc": 0.5,
+      "macro_f1": 0.4025974025974026,
+      "balanced_accuracy": 0.5,
+      "accuracy": 0.6739130434782609
+    },
+    "test": {
+      "auroc": 0.5,
+      "macro_f1": 0.402088772845953,
+      "balanced_accuracy": 0.5,
+      "accuracy": 0.6724890829694323
+    }
+  },
+  "ai_data_root": "/home/dannt/Documents/DR_12/artifacts/ai_data_20260911_011704"
+}

@@ -1,0 +1,21 @@
+/home/oem/anaconda3/envs/danenv/lib/python3.11/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/oem/anaconda3/envs/danenv/lib/python3.11/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=Wide_ResNet50_2_Weights.IMAGENET1K_V1`. You can also use `weights=Wide_ResNet50_2_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+[pd] 1783 files, 1783 windows -> fitting
+Traceback (most recent call last):
+  File "/home/oem/DR_12/PatchCore/train_two_bank.py", line 122, in <module>
+    main()
+  File "/home/oem/DR_12/PatchCore/train_two_bank.py", line 88, in main
+    fill_memory_bank_prealloc(model, loader, len(rows))  # same result as model.fit(loader), half the peak RAM
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/oem/DR_12/PatchCore/two_bank_common.py", line 139, in fill_memory_bank_prealloc
+    feats = np.asarray(model._embed(images.to(torch.float).to(model.device)))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/oem/DR_12/PatchCore/patchcore-inspection/src/patchcore/patchcore.py", line 136, in _embed
+    features = [x.reshape(-1, *x.shape[-3:]) for x in features]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/oem/DR_12/PatchCore/patchcore-inspection/src/patchcore/patchcore.py", line 136, in <listcomp>
+    features = [x.reshape(-1, *x.shape[-3:]) for x in features]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 6.89 GiB. GPU 0 has a total capacity of 23.52 GiB of which 5.09 GiB is free. Including non-PyTorch memory, this process has 18.38 GiB memory in use. Of the allocated memory 17.86 GiB is allocated by PyTorch, and 83.19 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

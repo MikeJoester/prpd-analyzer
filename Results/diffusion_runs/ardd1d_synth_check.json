@@ -1,0 +1,71 @@
+{
+  "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+  "clean_files": 200,
+  "real_files": 200,
+  "baseline_frechet": 36.60436219647304,
+  "baseline_mmd": 0.007612975846252534,
+  "tolerance": 0.05,
+  "verdict": "어떤 설정도 기준선(Lab PD ↔ Field PD)보다 5% 이상 가깝지 않다. 이후 학습 결과는 모두 '합성 노이즈 한정'으로 표기해야 한다.",
+  "diagnosis": {
+    "lab_mean_channel": 3.869605302810669,
+    "field_mean_channel": 2.974247694015503,
+    "lab_max_channel": 121.41605377197266,
+    "field_max_channel": 127.07718658447266,
+    "mean_channel_gap": -0.895357608795166,
+    "max_channel_gap": 5.6611328125,
+    "interpretation": "Field PD는 Lab PD보다 mean profile이 낮고 max profile이 높다. 즉 시간축에서 더 드물지만 더 큰 펄스를 낸다. 음수가 없는 노이즈를 섞으면 두 채널이 함께 올라가므로 이 차이를 재현할 수 없다 — Lab→Field 격차는 '노이즈 바닥' 차이가 아니다."
+  },
+  "best_by_frechet": [
+    {
+      "mode": "maximum",
+      "scale": 0.02,
+      "note": "",
+      "frechet": 36.604359992614036,
+      "mmd": 0.007612947934333647
+    }
+  ],
+  "rows": [
+    {
+      "mode": "(없음)",
+      "scale": 0.0,
+      "note": "Lab PD ↔ Field PD — 넘어야 할 기준선",
+      "frechet": 36.60436219647304,
+      "mmd": 0.007612975846252534
+    },
+    {
+      "mode": "maximum",
+      "scale": 0.02,
+      "note": "",
+      "frechet": 36.604359992614036,
+      "mmd": 0.007612947934333647
+    },
+    {
+      "mode": "maximum",
+      "scale": 0.05,
+      "note": "",
+      "frechet": 36.6566608235388,
+      "mmd": 0.007757591632855054
+    },
+    {
+      "mode": "maximum",
+      "scale": 0.1,
+      "note": "",
+      "frechet": 38.313008975203324,
+      "mmd": 0.010398841865006392
+    },
+    {
+      "mode": "maximum",
+      "scale": 0.3,
+      "note": "",
+      "frechet": 55.31740138329751,
+      "mmd": 0.04137773257422239
+    },
+    {
+      "mode": "maximum",
+      "scale": 1.0,
+      "note": "",
+      "frechet": 242.8446507563047,
+      "mmd": 0.3159718841855851
+    }
+  ]
+}

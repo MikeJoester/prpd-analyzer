@@ -1,0 +1,61 @@
+{
+  "created_at": "2026-08-24T10:31:50.546053+09:00",
+  "run_folder": "ardd1d_e5_20260824_101907",
+  "files": [
+    {
+      "path": "checkpoints/best.pt",
+      "size": 115432397,
+      "sha256": null
+    },
+    {
+      "path": "checkpoints/last.pt",
+      "size": 115432397,
+      "sha256": null
+    },
+    {
+      "path": "dataset_description.txt",
+      "size": 5062,
+      "sha256": "2afe345844bf6846b0d2788bec19beffb3967ca0d9f40532407586e39129ea01"
+    },
+    {
+      "path": "evaluation_report.html",
+      "size": 4889107,
+      "sha256": "327f8b84d916999a72b9a95c844a1af208d395dcd5e9fb90c31cb692e5c9f6f7"
+    },
+    {
+      "path": "metrics.json",
+      "size": 1822,
+      "sha256": "b185a125adaf27da0e50f22462dccf89d41cd11dd90e7df489c7b3f064a0aa5b"
+    },
+    {
+      "path": "run_config.json",
+      "size": 4812,
+      "sha256": "c1bbea2976258cf40101e5475a86cacac1b250ea27657e217dc60392596ddcf6"
+    },
+    {
+      "path": "samples/paired_test.npz",
+      "size": 249339,
+      "sha256": "4a0fd9d85386d746724a97a4c1dbb174de84d4600726f7edee33d266c039df82"
+    },
+    {
+      "path": "samples/real_noisy.npz",
+      "size": 61955,
+      "sha256": "dd5c698332b0972dfdff1df7ad63839bf7fd71058c5d59fafe6ab296afd6364c"
+    },
+    {
+      "path": "samples/sample_config.json",
+      "size": 130,
+      "sha256": "cbca74320d88787babfc1bbaf5ceed03bfe2d4c4b31078aa07da3d8296454389"
+    },
+    {
+      "path": "split_config.json",
+      "size": 4305,
+      "sha256": "e1f54291936eff48386df0fe92b435da4c674b98b283f7a54bafc0c95c631696"
+    },
+    {
+      "path": "train_log.jsonl",
+      "size": 23041,
+      "sha256": "d9c318b3c16632035c7b45f385f608a383899d40b2820419d0264ddbbe760123"
+    }
+  ]
+}

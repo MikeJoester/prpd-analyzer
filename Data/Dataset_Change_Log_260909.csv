@@ -1,0 +1,66 @@
+Item,Value,Remarks / Notes,,
+**Comparison Baseline**,,,,
+└ Delivered Version,`260512_ByDate`,Created 2026-07-15 ~ 07-16,,
+,,,,
+**Change Summary**,,,,
+└ Label Changes,26,See **\[Label Changes\]** sheet below,,
+└ Excluded from Dataset,8,See **\[Excluded\]** sheet below,,
+└ Newly Added,0,No additions to the 260512 series,,
+,,,,
+**Label Change Details**,,,,
+└ Floating → Noise,15,,,
+└ Void → Noise,8,,,
+└ Void → Corona,2,,,
+└ Noise → Floating,1,,,
+,,,,
+**Field Data Acquired After Delivery**,,,,
+└ Shinyangjae Event (Noise Diagnosis),130,"Received 2026-08, Circuit breaker operation waveform",,
+└ Shinyangjae Event (PD Diagnosis),11,Received 2026-08,,
+└ CBGIS Raw,21,"Condenser partial discharge, all labeled as **Void**",,
+,,,,
+**Reference**,,,,
+└ 1 item missing in delivery type tree,`K_0000_GLU105_CH01_SWPD_9999999_02_20251217131600.dat`,Exists in date tree (Lab/20251217),,
+,,,,
+,,,,
+,,,,
+Environment,Measurement Date,Previous Classification,New Classification,File Name
+Field,20250203,Floating,Noise,1_256_20250203_100700_Void_94.dat
+Field,20250203,Floating,Noise,1_256_20250203_105500_Void_82.dat
+Field,20250203,Floating,Noise,1_256_20250203_214800_Void_91.dat
+Field,20260216,Floating,Noise,K_E438_GLU303P2_CH12_SWPD_1771249380000.dat
+Field,20260218,Floating,Noise,K_E438_GLU303P2_CH12_SWPD_1771403160000.dat
+Lab,20240903,Floating,Noise,K_SITENAME_GLU103_CH02_SWPD_9999999_02_20240903135900.dat
+Lab,20240903,Floating,Noise,K_SITENAME_GLU103_CH02_SWPD_9999999_02_20240903140000.dat
+Lab,20240903,Floating,Noise,K_SITENAME_GLU103_CH02_SWPD_9999999_02_20240903140100.dat
+Lab,20240903,Floating,Noise,K_SITENAME_GLU103_CH02_SWPD_9999999_02_20240903140200.dat
+Lab,20240903,Floating,Noise,K_SITENAME_GLU103_CH02_SWPD_9999999_02_20240903140300.dat
+Lab,20240903,Floating,Noise,K_SITENAME_GLU103_CH02_SWPD_9999999_02_20240903140900.dat
+Lab,20240903,Floating,Noise,K_SITENAME_GLU103_CH02_SWPD_9999999_02_20240903141000.dat
+Lab,20240903,Floating,Noise,K_SITENAME_GLU103_CH02_SWPD_9999999_02_20240903141100.dat
+Lab,20240903,Floating,Noise,K_SITENAME_GLU103_CH02_SWPD_9999999_02_20240903141200.dat
+Lab,20240903,Floating,Noise,K_SITENAME_GLU103_CH02_SWPD_9999999_02_20240903141300.dat
+Field,20260218,Noise,Floating,K_E012_GLU304_CH02_SWPD_1771346160000.dat
+Lab,20160607,Void,Corona,PRPS_20160607_1338_DU0_LU0_CH0.dat
+Lab,20160607,Void,Corona,PRPS_20160607_1340_DU0_LU0_CH0.dat
+Field,20250203,Void,Noise,1_256_20250203_095900_Void_96.dat
+Field,20250203,Void,Noise,1_269_20250203_091300_Void_97.dat
+Field,20260219,Void,Noise,K_S307_GLU306_CH03_SWPD_1771466580000.dat
+Field,20260219,Void,Noise,K_S307_GLU306_CH03_SWPD_1771466820000.dat
+Field,20260219,Void,Noise,K_S307_GLU311_CH03_SWPD_1771450140000.dat
+Field,20260217,Void,Noise,K_S726_GLU101_CH01_SWPD_1771312140000.dat
+Field,20260217,Void,Noise,K_S726_GLU101_CH02_SWPD_1771316580000.dat
+Field,20260218,Void,Noise,K_S726_GLU104_CH06_SWPD_1771401600000.dat
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+Environment,Measurement Date,Current Classification,File Name,
+Field,20230807,Void,019.K_2429_GLU306_CH02_SWPD_1691393640303.dat,
+Field,20230804,Void,038.K_D268_GLU302_CH03_SWPD_1691128380000.dat,
+Field,20210604,Void,189.PD_05_안인개폐소_PRPS_20210604_2112_DU1_LU4_CH164.dat,
+Field,20210605,Void,202.PD_05_안인개폐소_PRPS_20210605_1013_DU1_LU4_CH164.dat,
+Field,20220226,Corona,229.PD_06_신당진_PRPS_20220226_0922_345kV 신당진S_S_101_CH2.dat,
+Field,20220110,Void,237.PD_07_순창_K_E230_GLU102_CH12_SWPD_3592397_02_20220110215200.dat,
+Field,20220204,Void,304.PD_07_순창_K_E230_GLU102_CH12_SWPD_3592397_02_20220204144700.dat,
+Field,20230716,Noise,N33_K_S512_GLU306_CH12_SWPD_1689425220999.dat,

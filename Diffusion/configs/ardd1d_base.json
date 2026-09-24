@@ -1,0 +1,78 @@
+{
+  "seed": 42,
+  "run_prefix": "ardd1d_e1",
+  "notes": "E1 — ARDD 1D 트랙의 baseline. 1D U-Net + cosine schedule, 논문 구성요소 전부 off. 18.4의 A1~A3 기여를 재려면 이 설정이 기준선이다.",
+  "data": {
+    "ai_data_root": "artifacts/ai_data_20260825_101830",
+    "memmap_cache": "artifacts/repr_cache",
+    "profile_cache": "artifacts/profile_cache",
+    "representation": "profile_v1",
+    "use_profile_cache": true,
+    "realizations_per_file": 8,
+    "samples_per_file": 4,
+    "clean_groups": ["Lab PD"],
+    "noise_groups": [],
+    "real_noisy_groups": ["Field PD"],
+    "clean_labels": null
+  },
+  "split": {
+    "ratios": { "train": 0.7, "val": 0.15, "test": 0.15 },
+    "scope": "global"
+  },
+  "noise": {
+    "kind": "cin",
+    "mode": "maximum",
+    "gain_min": 0.6,
+    "gain_max": 1.4,
+    "dropout_probability": 0.05
+  },
+  "cin": {
+    "white_sigma": 6.0,
+    "pink_sigma": 4.0,
+    "harmonic_amplitudes": [10.0, 4.0, 2.0],
+    "harmonic_orders": [1, 3, 5],
+    "harmonic_axis": "phase",
+    "pink_axis": "time",
+    "randomize_harmonic_phase": true,
+    "target_snr_db": null
+  },
+  "model": {
+    "base_channels": 64,
+    "channel_multipliers": [1, 2, 4],
+    "blocks_per_stage": 2,
+    "attention_stages": [2],
+    "dropout": 0.0,
+    "padding_mode": "circular"
+  },
+  "components": {
+    "ardd_resid": false,
+    "ardd_alpha": 0.5,
+    "ardd_entropy_window": 9,
+    "ardd_entropy_bins": 16,
+    "ardd_entropy_source": "condition",
+    "ardd_invert_entropy": false,
+    "morph_attn": false,
+    "morph_scales": [1, 3, 7],
+    "morph_normalize": "none"
+  },
+  "diffusion": {
+    "schedule": "cosine",
+    "timesteps": 1000,
+    "loss_type": "l2"
+  },
+  "train": {
+    "epochs": 200,
+    "batch_size": 64,
+    "learning_rate": 0.0002,
+    "ema_decay": 0.999,
+    "grad_clip": 1.0,
+    "num_workers": 0,
+    "max_steps": 0
+  },
+  "sample": {
+    "steps": 50,
+    "eta": 0.0,
+    "batch_size": 64,
+    "max_files": 128
+  }
+}

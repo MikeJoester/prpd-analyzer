@@ -1,0 +1,18 @@
+{
+  "method": "PatchCore (s43)",
+  "run": "Results/patchcore/final_k8_s43",
+  "aggregation": "mean",
+  "threshold": -0.0956,
+  "val_file_auroc": 0.9578,
+  "test_file_auroc": 0.8723,
+  "test_window_auroc": 0.8234,
+  "val_window_auroc": 0.8889,
+  "test_macro_f1": 0.8457,
+  "test_noise_f1": 0.9057,
+  "test_pd_f1": 0.7857,
+  "test_balanced_accuracy": 0.8342,
+  "test_pd_recall": 0.7333,
+  "test_noise_recall": 0.9351,
+  "pixel_auroc": null,
+  "pixel_auroc_note": "not measurable: no pixel-level ground truth; window-level AUROC reported instead"
+}

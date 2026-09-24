@@ -1,0 +1,71 @@
+{
+  "created_at": "2026-08-24T10:47:59.510384+09:00",
+  "run_folder": "ardd1d_e1_20260824_095128",
+  "files": [
+    {
+      "path": "checkpoints/best.pt",
+      "size": 115430797,
+      "sha256": null
+    },
+    {
+      "path": "checkpoints/last.pt",
+      "size": 115430797,
+      "sha256": null
+    },
+    {
+      "path": "dataset_description.txt",
+      "size": 4811,
+      "sha256": "45a0ce965099715eb438ac7523832d9c5182582f8e089c6cd6b0daec409c7133"
+    },
+    {
+      "path": "evaluation_report.html",
+      "size": 4888930,
+      "sha256": "9acfc9f105c17981999e7bcceeee3b9f10f2ddb78d1c01b486b8a45e290a449c"
+    },
+    {
+      "path": "metrics.json",
+      "size": 1479,
+      "sha256": "8ed236432305746eda4a21e11375fdb6851340cb0b58b1ebf435534359d33e3d"
+    },
+    {
+      "path": "robustness.json",
+      "size": 5144,
+      "sha256": "e99303cf94088df892be228d13a4e1281c03887eb77bc8fc23c436358417e921"
+    },
+    {
+      "path": "robustness_report.html",
+      "size": 4877414,
+      "sha256": "c7180e7f06ca54de4db5833f4721c1d7682351d3125e1eef23669a848186d1d1"
+    },
+    {
+      "path": "run_config.json",
+      "size": 4402,
+      "sha256": "efe8a6d6e64b2bb4f1bab45ced38bb88c7a73bfd44320d9b01887f5402458cb3"
+    },
+    {
+      "path": "samples/paired_test.npz",
+      "size": 248473,
+      "sha256": "7b4983bacb4fe58191d80be6b51eeb597128edd5530f5c972cb06496c50d6bfc"
+    },
+    {
+      "path": "samples/real_noisy.npz",
+      "size": 64348,
+      "sha256": "654d649e4dda3374b4fcd340154c44d9d9c07f04fd4ed9bb32e61036ddbcef6c"
+    },
+    {
+      "path": "samples/sample_config.json",
+      "size": 130,
+      "sha256": "cbca74320d88787babfc1bbaf5ceed03bfe2d4c4b31078aa07da3d8296454389"
+    },
+    {
+      "path": "split_config.json",
+      "size": 4305,
+      "sha256": "e1f54291936eff48386df0fe92b435da4c674b98b283f7a54bafc0c95c631696"
+    },
+    {
+      "path": "train_log.jsonl",
+      "size": 22979,
+      "sha256": "f463bb0ee6b185d01b2c967cc26258090c4211c2f0cce513c68bc40c99f0f6c4"
+    }
+  ]
+}

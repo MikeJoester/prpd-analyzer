@@ -1,0 +1,31 @@
+PRPD AI raw dataset description
+
+생성 날짜 및 시간: 2026-09-02T21:51:15.070169+09:00
+생성 데이터 종류: 원본 128x3600 raw tensor, metadata, raw data 목록
+원본 데이터 경로: /home/dannt/Documents/DR_12/PRPD Analyzer/Data/by_type
+원본 root 설명: by_type 기준을 사용했으며 날짜별/유형별 중 하나만 분석함
+선택 그룹: Lab PD, Field PD, Lab Noise, Field Noise, Synthetic
+그룹별 파일 수:
+group
+Field Noise    1017
+Field PD        513
+Lab Noise       146
+Lab PD         1445
+Synthetic        51
+label별 파일 수:
+label
+Corona       319
+Floating     416
+Noise       1214
+Particle     314
+Void         909
+전체 선택 파일 수: 3172
+정상 파일 수: 3172
+제외 파일 수: 0
+raw tensor shape: (128, 3600)  # (phase, time)
+raw tensor dtype: uint8
+payload layout: 3600 cycles x 128 phase bins (phase contiguous), transposed to (128, 3600)
+normalization: none (원본 raw 보존)
+split 방법: 미지정 (AI model 단계에서 결정)
+random seed: 42
+raw data version: raw_v2

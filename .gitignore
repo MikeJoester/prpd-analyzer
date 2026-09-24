@@ -1,0 +1,63 @@
+# ---------------------------------------------------------------- secrets
+.env
+*.pem
+*.key
+
+# ------------------------------------------------- raw data (not in git)
+# The PRPD dataset lives outside the repo. Keep only the small manifests.
+Data/**
+!Data/
+!Data/*.csv
+PRPD_Analyzer/Data/
+PatchCore/patchcore_data/
+
+# ---------------------------------------- generated datasets & model weights
+# artifacts/ holds ai_data_* raw tensors, caches and checkpoints; keep the
+# provenance files so results can be traced back to the dataset that made them.
+artifacts/**
+!artifacts/
+!artifacts/ai_data_*/
+!artifacts/ai_data_*/run_config.json
+!artifacts/ai_data_*/dataset_description.txt
+!artifacts/ai_data_*/manifest.json
+
+# heavy binaries anywhere
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.faiss
+*.pkl
+*.npy
+*.npz
+*.parquet
+
+# --------------------------------------------------------- results (partial)
+# Keep metrics, summary tables and figures; drop bulky regenerable outputs.
+Results/**/window_scores*.csv
+Results/_smoke/
+PatchCore/patchcore_data/prpd_v2/manifest.csv
+
+# ----------------------------------------------- vendored third-party repos
+# These carry their own git history; clone them separately (see README).
+# Local modifications to patchcore-inspection are kept as a patch.
+PatchCore/patchcore-inspection/
+Diffusion/third_party/
+latent-diffusion/
+
+# ------------------------------------------------------------------ caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+*.egg-info/
+.DS_Store
+
+# stray interpreter binary that was committed by accident
+/python
+
+# regenerable HTML evaluation reports (several MB each)
+Results/**/*.html
+
+# third-party papers - not ours to redistribute (see the registry tables in Plans/)
+*.pdf

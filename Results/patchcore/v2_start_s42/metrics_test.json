@@ -1,0 +1,84 @@
+{
+  "aggregation": "p90",
+  "n_files": 229,
+  "n_pd": 75,
+  "n_noise": 154,
+  "auroc": 0.8117748917748918,
+  "macro_f1": 0.7061694116657201,
+  "balanced_accuracy": 0.713030303030303,
+  "accuracy": 0.7336244541484717,
+  "per_class": {
+    "PD": {
+      "precision": 0.5833333333333334,
+      "recall": 0.6533333333333333,
+      "f1": 0.6163522012578616,
+      "support": 75
+    },
+    "Noise": {
+      "precision": 0.8206896551724138,
+      "recall": 0.7727272727272727,
+      "f1": 0.7959866220735786,
+      "support": 154
+    }
+  },
+  "confusion_matrix": {
+    "rows_true_[PD,Noise]": [
+      [
+        49,
+        26
+      ],
+      [
+        35,
+        119
+      ]
+    ]
+  },
+  "threshold": 0.12093267440795918,
+  "test_auroc_by_aggregation": {
+    "mean": 0.86,
+    "median": 0.8308225108225108,
+    "max": 0.8089177489177489,
+    "min": 0.8400000000000001,
+    "p90": 0.8117748917748918
+  },
+  "banks": {
+    "pd": {
+      "train_files": 1783,
+      "train_windows": 7132,
+      "memory_bank_size": 55914,
+      "settings": {
+        "backbone": "wideresnet50",
+        "layers": [
+          "layer2",
+          "layer3"
+        ],
+        "image_size": 224,
+        "pretrain_dim": 1024,
+        "target_dim": 1024,
+        "patchsize": 3,
+        "num_nn": 1
+      },
+      "coreset_ratio": 0.01
+    },
+    "noise": {
+      "train_files": 876,
+      "train_windows": 3504,
+      "memory_bank_size": 27471,
+      "settings": {
+        "backbone": "wideresnet50",
+        "layers": [
+          "layer2",
+          "layer3"
+        ],
+        "image_size": 224,
+        "pretrain_dim": 1024,
+        "target_dim": 1024,
+        "patchsize": 3,
+        "num_nn": 1
+      },
+      "coreset_ratio": 0.01
+    }
+  },
+  "ai_data_root": "/home/dannt/Documents/DR_12/artifacts/ai_data_20260911_011704",
+  "raw_data_version": "raw_v2"
+}

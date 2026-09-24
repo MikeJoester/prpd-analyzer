@@ -1,0 +1,4 @@
+Model,Image AUROC,Pixel AUROC,Optimal F1,Version
+SVM Baseline,0.4163641476633603,N/A,0.9634898055451354,"v1: random per-file split, PD-only normal, dummy pixel masks - NOT comparable with v2 (see Results/Model_Comparison_v2)"
+EfficientAD,0.41842212905205034,N/A,0.9634898055451354,"v1: random per-file split, PD-only normal, dummy pixel masks - NOT comparable with v2 (see Results/Model_Comparison_v2)"
+PatchCore (ResNet-50),0.6492949542021532,0.64,0.873602751455528,"v1: random per-file split, PD-only normal, dummy pixel masks - NOT comparable with v2 (see Results/Model_Comparison_v2)"

@@ -1,0 +1,54 @@
+{
+  "seed": 42,
+  "run_prefix": "smoke",
+  "notes": "파이프라인 연결만 확인하는 최소 설정. 성능 평가용이 아님.",
+  "data": {
+    "ai_data_root": "artifacts/ai_data_20260825_101830",
+    "memmap_cache": "artifacts/repr_cache",
+    "crop_width": 128,
+    "samples_per_file": 1,
+    "clean_groups": ["Lab PD"],
+    "noise_groups": ["Lab Noise", "Field Noise"],
+    "real_noisy_groups": ["Field PD"],
+    "clean_labels": null
+  },
+  "split": {
+    "ratios": { "train": 0.7, "val": 0.15, "test": 0.15 },
+    "scope": "global"
+  },
+  "noise": {
+    "mode": "maximum",
+    "gain_min": 0.8,
+    "gain_max": 1.2,
+    "phase_roll": true,
+    "time_roll": true,
+    "dropout_probability": 0.0
+  },
+  "model": {
+    "base_channels": 16,
+    "channel_multipliers": [1, 2],
+    "blocks_per_stage": 1,
+    "attention_stages": [],
+    "dropout": 0.0
+  },
+  "diffusion": {
+    "schedule": "cosine",
+    "timesteps": 100,
+    "loss_type": "l2"
+  },
+  "train": {
+    "epochs": 1,
+    "batch_size": 4,
+    "learning_rate": 0.0002,
+    "ema_decay": 0.99,
+    "grad_clip": 1.0,
+    "num_workers": 0,
+    "max_steps": 20
+  },
+  "sample": {
+    "steps": 10,
+    "eta": 0.0,
+    "batch_size": 4,
+    "max_files": 2
+  }
+}

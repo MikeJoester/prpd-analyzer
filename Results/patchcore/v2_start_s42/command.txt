@@ -1,0 +1,1 @@
+PatchCore/run_two_bank.sh v2_start_s42 --seed 42 -- 

@@ -1,0 +1,18 @@
+{
+  "method": "EfficientAD K=8 (s43)",
+  "run": "Results/efficientad/effad_v2_k8_s43",
+  "aggregation": "min",
+  "threshold": 1.6663402500000002e-07,
+  "val_file_auroc": 0.7977204301075269,
+  "test_file_auroc": 0.6038961038961039,
+  "test_window_auroc": 0.49957206908737517,
+  "val_window_auroc": 0.6783663045863506,
+  "test_macro_f1": 0.609831513851202,
+  "test_noise_f1": 0.7290969899665551,
+  "test_pd_f1": 0.49056603773584906,
+  "test_balanced_accuracy": 0.6138961038961039,
+  "test_pd_recall": 0.52,
+  "test_noise_recall": 0.7077922077922078,
+  "pixel_auroc": null,
+  "pixel_auroc_note": "not measurable: no pixel-level ground truth; window-level AUROC reported instead"
+}

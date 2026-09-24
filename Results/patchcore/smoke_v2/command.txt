@@ -1,0 +1,1 @@
+PatchCore/run_two_bank.sh smoke_v2 --train-frac 0.05 -- --max-files 20

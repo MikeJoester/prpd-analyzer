@@ -1,0 +1,1 @@
+VAL_ONLY=1 PatchCore/run_two_bank.sh e1_l23_k1 --layers layer2 layer3 --k 1 -- --splits val

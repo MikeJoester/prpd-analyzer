@@ -1,0 +1,61 @@
+{
+  "created_at": "2026-08-24T09:47:38.824157+09:00",
+  "run_folder": "ardd1d_smoke_20260824_094602",
+  "files": [
+    {
+      "path": "checkpoints/best.pt",
+      "size": 1341103,
+      "sha256": null
+    },
+    {
+      "path": "checkpoints/last.pt",
+      "size": 1341103,
+      "sha256": null
+    },
+    {
+      "path": "dataset_description.txt",
+      "size": 3954,
+      "sha256": "c28fab71404db45595ff846e514be9034f2523b0065cf0fb97ea06210d75d5ac"
+    },
+    {
+      "path": "evaluation_report.html",
+      "size": 4888530,
+      "sha256": "18bb15280bb56900937413dd84e69758a6d433f801f46368cbabfa70466e5e7d"
+    },
+    {
+      "path": "metrics.json",
+      "size": 1535,
+      "sha256": "c9a8cdadebf7830c9f525a80172a1a616f07610433098942a166c82cd6d13d4b"
+    },
+    {
+      "path": "run_config.json",
+      "size": 3606,
+      "sha256": "5d6b3800effdbb4b2302ab02471de91a2217d19a514c0622e9eed4842d87053c"
+    },
+    {
+      "path": "samples/paired_test.npz",
+      "size": 11087,
+      "sha256": "2d73e19629001d0fe70c87f5d038a8e32f1d08a57c3809b55b4104a03c7dbac7"
+    },
+    {
+      "path": "samples/real_noisy.npz",
+      "size": 3755,
+      "sha256": "1eb3f60f1af6c36b153384fb696ef47c5f836eff154270c23efdd6ce7777ab4d"
+    },
+    {
+      "path": "samples/sample_config.json",
+      "size": 130,
+      "sha256": "27258dbbd138cb8381ed7892d1a53352ef658178d4b3a0491d068a6d6a64ae7c"
+    },
+    {
+      "path": "split_config.json",
+      "size": 4305,
+      "sha256": "e1f54291936eff48386df0fe92b435da4c674b98b283f7a54bafc0c95c631696"
+    },
+    {
+      "path": "train_log.jsonl",
+      "size": 107,
+      "sha256": "207587f3d3646d1bd5281395769335ffa8d30ec7a4fe0da4def614a0c27c6e38"
+    }
+  ]
+}

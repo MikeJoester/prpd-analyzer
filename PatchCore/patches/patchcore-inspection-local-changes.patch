@@ -1,0 +1,55 @@
+diff --git a/bin/run_patchcore.py b/bin/run_patchcore.py
+index 8666b2b..b19cc32 100644
+--- a/bin/run_patchcore.py
++++ b/bin/run_patchcore.py
+@@ -174,6 +174,8 @@ def run(
+                 )
+ 
+             LOGGER.info("Computing evaluation metrics.")
++            np.savez("Results/patchcore/patchcore_raw_scores.npz", scores=scores, labels=anomaly_labels)
++
+             auroc = patchcore.metrics.compute_imagewise_retrieval_metrics(
+                 scores, anomaly_labels
+             )["auroc"]
+diff --git a/src/patchcore/sampler.py b/src/patchcore/sampler.py
+index 09f57b5..366a90a 100644
+--- a/src/patchcore/sampler.py
++++ b/src/patchcore/sampler.py
+@@ -81,14 +81,23 @@ class GreedyCoresetSampler(BaseSampler):
+     def _compute_batchwise_differences(
+         matrix_a: torch.Tensor, matrix_b: torch.Tensor
+     ) -> torch.Tensor:
+-        """Computes batchwise Euclidean distances using PyTorch."""
+-        a_times_a = matrix_a.unsqueeze(1).bmm(matrix_a.unsqueeze(2)).reshape(-1, 1)
+-        b_times_b = matrix_b.unsqueeze(1).bmm(matrix_b.unsqueeze(2)).reshape(1, -1)
+-        a_times_b = matrix_a.mm(matrix_b.T)
+-
+-        return (-2 * a_times_b + a_times_a + b_times_b).clamp(0, None).sqrt()
++        b_times_b = (matrix_b ** 2).sum(dim=1).unsqueeze(0)
++        
++        # Process in chunks to avoid OOM
++        chunk_size = 50000
++        results = []
++        for i in range(0, matrix_a.size(0), chunk_size):
++            chunk_a = matrix_a[i:i+chunk_size]
++            a_times_a = (chunk_a ** 2).sum(dim=1, keepdim=True)
++            a_times_b = chunk_a.mm(matrix_b.T)
++            res = (-2 * a_times_b + a_times_a + b_times_b).clamp(0, None).sqrt()
++            results.append(res)
++            del chunk_a, a_times_a, a_times_b, res
++            
++        return torch.cat(results, dim=0)
+ 
+     def _compute_greedy_coreset_indices(self, features: torch.Tensor) -> np.ndarray:
++        import torch; torch.cuda.empty_cache()
+         """Runs iterative greedy coreset selection.
+ 
+         Args:
+@@ -128,6 +137,7 @@ class ApproximateGreedyCoresetSampler(GreedyCoresetSampler):
+         super().__init__(percentage, device, dimension_to_project_features_to)
+ 
+     def _compute_greedy_coreset_indices(self, features: torch.Tensor) -> np.ndarray:
++        import torch; torch.cuda.empty_cache()
+         """Runs approximate iterative greedy coreset selection.
+ 
+         This greedy coreset implementation does not require computation of the

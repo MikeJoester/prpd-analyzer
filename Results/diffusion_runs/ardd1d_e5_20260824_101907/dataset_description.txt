@@ -1,0 +1,88 @@
+PRPD ARDD 1D denoising run description
+
+생성 날짜 및 시간: 2026-08-24T10:19:07.382752+09:00
+실행 폴더: ardd1d_e5_20260824_101907
+config hash: b928da207135
+random seed: 42
+
+[입력 데이터]
+AI dataset 경로: C:\Users\USER\Documents\Yong\202608_PRPD\artifacts\ai_data_20260821_160405
+raw_data_version: raw_v1
+원본 .dat를 다시 해석하지 않고 Analyzer가 검증한 raw tensor만 사용함
+한 run 안에서 하나의 ai_data 실행만 사용하며 여러 실행을 합치지 않음
+clean pool 그룹: Lab PD
+noise pool 그룹: (없음 — 파라메트릭 CIN 사용)
+실제 noisy 평가 그룹: Field PD
+split별 pool 수: {"train": {"clean": 787, "noise": 0, "real_noisy": 229}, "val": {"clean": 104, "noise": 0, "real_noisy": 47}, "test": {"clean": 171, "noise": 0, "real_noisy": 46}}
+
+[표현]
+representation: profile_v1
+raw (128, 3600) → 위상 profile (2, 128) = [시간 평균 128, 시간 최대 128]
+두 채널을 이어붙이면 Analyzer의 256차원 mean/max feature와 정확히 같다.
+비가역 변환이므로 복원 결과를 128x3600으로 되돌릴 수 없다.
+mean 채널은 3,600 사이클 평균이라 시간축 노이즈에 원래 둔감하다 —
+채널별 개선폭을 반드시 분리해서 읽을 것.
+
+[256 feature 사용에 대한 예외 선언]
+이 트랙은 Analyzer의 256차원 mean/max feature를 딥러닝 입력으로 사용한다. `claude.md` 11절의 '256 feature를 딥러닝 입력으로 쓰지 않는다' 규칙에 대한 명시적 예외이며, 논문(ARDD-2025)과 같은 1차원 신호에서 기법을 검증하려는 목적이다. 이 트랙의 복원 출력은 raw tensor로 되돌릴 수 없으므로 분류·이상탐지 트랙의 입력으로 넘기지 않는다.
+
+[학습 데이터 구성]
+같은 시점의 clean/noisy 실측 쌍이 없으므로 노이즈를 합성해 paired 데이터를 만든다.
+노이즈는 raw 영역에서 섞은 뒤 profile을 추출한다(profile에 직접 더하지 않는다).
+노이즈 종류: cin
+mixing mode: maximum
+noise gain 범위: 0.6 ~ 1.4
+노이즈 없는 샘플 비율(dropout): 0.05
+profile 캐시 사용: True (파일당 실현 8개)
+
+[CIN 성분과 축 매핑]
+논문(ARDD-2025)의 Composite Industrial Noise = 백색 + pink(1/f) + 전원주파수 협대역.
+우리 raw는 (위상 128, 시간 3600)이고 두 축의 물리적 의미가 다르다:
+  128 위상 bin = AC 1주기, 3600 시간 열 = 사이클 인덱스(약 1분치).
+  백색 sigma=6.0 (양축 i.i.d.)
+  pink sigma=4.0, 축=time
+  전원주파수 진폭=[10.0, 4.0, 2.0], 차수=[1, 3, 5], 축=phase
+  target_snr_db=None
+축 매핑은 설계 판단이며, 대안(전부 시간축)도 config로 선택해 비교할 수 있다.
+
+[합성 전제 검증 (D1)]
+근거 파일: artifacts\diffusion_runs\ardd1d_synth_check.json
+판정: 어떤 설정도 기준선(Lab PD ↔ Field PD)보다 5% 이상 가깝지 않다. 이후 학습 결과는 모두 '합성 노이즈 한정'으로 표기해야 한다.
+기준선(Lab PD ↔ Field PD): frechet=36.60436219647304, mmd=0.007612975846252534
+mean 채널 격차(Field−Lab): -0.895357608795166
+max 채널 격차(Field−Lab): 5.6611328125
+Field PD는 Lab PD보다 mean profile이 낮고 max profile이 높다. 즉 시간축에서 더 드물지만 더 큰 펄스를 낸다. 음수가 없는 노이즈를 섞으면 두 채널이 함께 올라가므로 이 차이를 재현할 수 없다 — Lab→Field 격차는 '노이즈 바닥' 차이가 아니다.
+
+*** 이 실행의 결과는 '합성 노이즈 한정'이다. ***
+합성 noisy 분포가 실제 Field PD에 더 가까워지지 않았으므로, paired 지표의 개선을
+'실제 현장 노이즈를 제거한다'는 뜻으로 읽으면 안 된다.
+
+[분할]
+날짜 단위 분할 — 같은 날짜가 train과 test에 동시에 들어가지 않음
+split 요약: {"train": 46, "val": 8, "test": 10}
+
+[모델과 논문 구성요소]
+조건부 1D U-Net base_channels=64, multipliers=(1, 2, 4), padding=circular
+diffusion: linear schedule, T=1000, loss=l2
+DDIM 추론: 50 steps, eta=0.0
+켜진 논문 구성요소(DIFFUSION.md 18.4): {"ardd_resid": {"alpha": 0.5, "entropy_window": 9, "entropy_bins": 16, "entropy_source": "condition", "invert_entropy": false}, "morph_attn": {"scales": [1, 3, 7], "normalize": "none"}}
+
+[환경]
+{
+  "python": "3.12.10",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "numpy": "2.5.2",
+  "pandas": "3.0.5",
+  "torch": "2.11.0+cu128",
+  "cuda_available": true,
+  "cuda_device": "NVIDIA GeForce RTX 5080"
+}
+
+[해석 주의]
+복원 출력은 노이즈 감소 결과이지 고장 판정이 아니다.
+논문의 분류 정확도 수치는 우리 개선 목표가 아니다(평가 지표가 다르다).
+
+[메모]
+E5 — 논문(ARDD-2025) 구성을 전부 켠 설정. A1(linear beta 1e-4~0.02) + A2(ardd_resid) + A3(morph_attn). E1(configs/ardd1d_base.json)과 데이터·분할·노이즈·지표가 동일해야 비교가 성립한다(DIFFUSION.md 18.1).
+
+모델 파라미터 수: 7,194,754

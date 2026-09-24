@@ -1,0 +1,1 @@
+VAL_ONLY=1 PatchCore/run_two_bank.sh e3_cs0001 --coreset 0.001 -- --splits val

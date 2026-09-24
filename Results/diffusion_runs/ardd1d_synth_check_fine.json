@@ -1,0 +1,68 @@
+{
+  "ai_data_root": "C:\\Users\\USER\\Documents\\Yong\\202608_PRPD\\artifacts\\ai_data_20260821_160405",
+  "clean_files": 200,
+  "real_files": 200,
+  "baseline_frechet": 36.60436219647304,
+  "baseline_mmd": 0.007612975846252534,
+  "verdict": "합성 분포가 기준선보다 실제 Field PD에 가까운 설정이 있다. 그 설정을 config에 반영할 것.",
+  "best_by_frechet": [
+    {
+      "mode": "maximum",
+      "scale": 0.02,
+      "note": "",
+      "frechet": 36.604359992614036,
+      "mmd": 0.007612947934333647
+    }
+  ],
+  "rows": [
+    {
+      "mode": "(없음)",
+      "scale": 0.0,
+      "note": "Lab PD ↔ Field PD — 넘어야 할 기준선",
+      "frechet": 36.60436219647304,
+      "mmd": 0.007612975846252534
+    },
+    {
+      "mode": "maximum",
+      "scale": 0.02,
+      "note": "",
+      "frechet": 36.604359992614036,
+      "mmd": 0.007612947934333647
+    },
+    {
+      "mode": "maximum",
+      "scale": 0.05,
+      "note": "",
+      "frechet": 36.6566608235388,
+      "mmd": 0.007757591632855054
+    },
+    {
+      "mode": "maximum",
+      "scale": 0.1,
+      "note": "",
+      "frechet": 38.313008975203324,
+      "mmd": 0.010398841865006392
+    },
+    {
+      "mode": "maximum",
+      "scale": 0.15,
+      "note": "",
+      "frechet": 41.05850734293374,
+      "mmd": 0.01517047978454844
+    },
+    {
+      "mode": "maximum",
+      "scale": 0.2,
+      "note": "",
+      "frechet": 44.81315381908984,
+      "mmd": 0.021985891732565044
+    },
+    {
+      "mode": "maximum",
+      "scale": 0.3,
+      "note": "",
+      "frechet": 55.31740138329751,
+      "mmd": 0.04137773257422239
+    }
+  ]
+}

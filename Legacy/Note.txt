@@ -1,0 +1,21 @@
+--------------------------------------------------------------------
+1. "Training_CNN.py": Returns the training-set accuracy of a CNN model.
+2. "Training_SVM.py": Returns the training-set accuracy of an SVM model.
+"Data": include the dataset of the 0820 and 0903 folders
+"Paths_and_Labels_of_TrainingSet.csv": Contains the file paths and labels of the training dataset
+
+---------------------------------------------------------------------------
+
+3. “Testing_CNN.py": Computes and returns Testing metrics for a CNN model.
+4. "Testing_SVM.py": Computes and returns Testing metrics for an SVM model.
+"Paths_and_Labels_of_TestingSet.csv": Contains the file paths and labels of the testing dataset
+
+About the mapping of classes after doing label_encoder
+label_mapping:
+    0: "Corona",
+    1: "Floating",
+    2: "Noise",
+    3: "Surface",
+    4: "Turn_to_turn",
+    5: "Void"
+

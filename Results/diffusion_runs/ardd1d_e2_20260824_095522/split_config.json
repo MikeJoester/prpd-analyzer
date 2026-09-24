@@ -1,0 +1,235 @@
+{
+  "scope": "global",
+  "seed": 42,
+  "ratios": {
+    "train": 0.7,
+    "val": 0.15,
+    "test": 0.15
+  },
+  "split_dates": {
+    "train": [
+      "20150724",
+      "20151106",
+      "20160607",
+      "20160608",
+      "20190331",
+      "20190401",
+      "20190403",
+      "20210325",
+      "20210326",
+      "20210405",
+      "20210506",
+      "20210603",
+      "20210604",
+      "20210605",
+      "20211027",
+      "20220104",
+      "20220108",
+      "20220120",
+      "20220204",
+      "20220226",
+      "20220426",
+      "20220506",
+      "20220715",
+      "20230401",
+      "20230402",
+      "20230403",
+      "20230405",
+      "20230417",
+      "20230422",
+      "20230426",
+      "20230427",
+      "20230501",
+      "20230503",
+      "20231001",
+      "20231002",
+      "20231005",
+      "20231006",
+      "20231007",
+      "20231011",
+      "20231017",
+      "20231018",
+      "20231023",
+      "20231107",
+      "20240307",
+      "20240308",
+      "20250203"
+    ],
+    "val": [
+      "20151224",
+      "20190323",
+      "20190327",
+      "20210104",
+      "20210221",
+      "20220115",
+      "20231012",
+      "20231122"
+    ],
+    "test": [
+      "20150723",
+      "20151210",
+      "20200216",
+      "20220119",
+      "20220203",
+      "20220427",
+      "20230404",
+      "20230409",
+      "20230930",
+      "20240912"
+    ]
+  },
+  "counts": {
+    "test": 217,
+    "train": 1016,
+    "val": 151
+  },
+  "coverage": [
+    {
+      "split": "train",
+      "group": "Field PD",
+      "label": "Corona",
+      "samples": 13,
+      "dates": 3
+    },
+    {
+      "split": "test",
+      "group": "Field PD",
+      "label": "Floating",
+      "samples": 9,
+      "dates": 3
+    },
+    {
+      "split": "train",
+      "group": "Field PD",
+      "label": "Floating",
+      "samples": 44,
+      "dates": 24
+    },
+    {
+      "split": "val",
+      "group": "Field PD",
+      "label": "Floating",
+      "samples": 10,
+      "dates": 4
+    },
+    {
+      "split": "test",
+      "group": "Field PD",
+      "label": "Particle",
+      "samples": 1,
+      "dates": 1
+    },
+    {
+      "split": "train",
+      "group": "Field PD",
+      "label": "Particle",
+      "samples": 2,
+      "dates": 1
+    },
+    {
+      "split": "test",
+      "group": "Field PD",
+      "label": "Void",
+      "samples": 36,
+      "dates": 4
+    },
+    {
+      "split": "train",
+      "group": "Field PD",
+      "label": "Void",
+      "samples": 170,
+      "dates": 20
+    },
+    {
+      "split": "val",
+      "group": "Field PD",
+      "label": "Void",
+      "samples": 37,
+      "dates": 4
+    },
+    {
+      "split": "test",
+      "group": "Lab PD",
+      "label": "Corona",
+      "samples": 47,
+      "dates": 3
+    },
+    {
+      "split": "train",
+      "group": "Lab PD",
+      "label": "Corona",
+      "samples": 107,
+      "dates": 3
+    },
+    {
+      "split": "val",
+      "group": "Lab PD",
+      "label": "Corona",
+      "samples": 30,
+      "dates": 1
+    },
+    {
+      "split": "test",
+      "group": "Lab PD",
+      "label": "Floating",
+      "samples": 32,
+      "dates": 3
+    },
+    {
+      "split": "train",
+      "group": "Lab PD",
+      "label": "Floating",
+      "samples": 155,
+      "dates": 3
+    },
+    {
+      "split": "val",
+      "group": "Lab PD",
+      "label": "Floating",
+      "samples": 29,
+      "dates": 1
+    },
+    {
+      "split": "test",
+      "group": "Lab PD",
+      "label": "Particle",
+      "samples": 39,
+      "dates": 2
+    },
+    {
+      "split": "train",
+      "group": "Lab PD",
+      "label": "Particle",
+      "samples": 231,
+      "dates": 5
+    },
+    {
+      "split": "val",
+      "group": "Lab PD",
+      "label": "Particle",
+      "samples": 16,
+      "dates": 1
+    },
+    {
+      "split": "test",
+      "group": "Lab PD",
+      "label": "Void",
+      "samples": 53,
+      "dates": 3
+    },
+    {
+      "split": "train",
+      "group": "Lab PD",
+      "label": "Void",
+      "samples": 294,
+      "dates": 4
+    },
+    {
+      "split": "val",
+      "group": "Lab PD",
+      "label": "Void",
+      "samples": 29,
+      "dates": 1
+    }
+  ]
+}
