@@ -1,0 +1,1 @@
+VAL_ONLY=1 PatchCore/run_two_bank.sh l3_s42 --layers layer3 --seed 42 -- --splits val

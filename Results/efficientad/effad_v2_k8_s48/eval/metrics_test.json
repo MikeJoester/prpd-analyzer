@@ -1,0 +1,44 @@
+{
+  "aggregation": "min",
+  "n_files": 229,
+  "n_pd": 75,
+  "n_noise": 154,
+  "auroc": 0.6522943722943723,
+  "macro_f1": 0.6107648725212464,
+  "balanced_accuracy": 0.6107792207792209,
+  "accuracy": 0.7248908296943232,
+  "per_class": {
+    "PD": {
+      "precision": 0.7,
+      "recall": 0.28,
+      "f1": 0.4,
+      "support": 75
+    },
+    "Noise": {
+      "precision": 0.7286432160804021,
+      "recall": 0.9415584415584416,
+      "f1": 0.8215297450424929,
+      "support": 154
+    }
+  },
+  "confusion_matrix": {
+    "rows_true_[PD,Noise]": [
+      [
+        21,
+        54
+      ],
+      [
+        9,
+        145
+      ]
+    ]
+  },
+  "threshold": -3.734474e-07,
+  "test_auroc_by_aggregation": {
+    "mean": 0.560952380952381,
+    "median": 0.5095670995670996,
+    "max": 0.5344588744588745,
+    "min": 0.6522943722943723,
+    "p90": 0.5016450216450217
+  }
+}

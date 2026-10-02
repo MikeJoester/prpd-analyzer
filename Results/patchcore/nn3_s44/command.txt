@@ -1,0 +1,1 @@
+num-nn 3 seed 44 (banks reused from final_k8_s44)

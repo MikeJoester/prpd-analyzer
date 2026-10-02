@@ -52,6 +52,15 @@ test: image AUROC 0.853 [0.816, 0.872]   optimal F1 0.799   |   baseline 256-D k
 | **Adopt a change only if median val AUROC gains more than the [min, max] seed spread.** | Otherwise you are fitting noise. |
 | **Record every run**, including failures. | `python PatchCore/summarize_runs.py Results/patchcore/<run>... --out table.csv` collects them. |
 
+**Execution protocol used (2026-09-29).** Running 3 seeds for every candidate would be ~27 runs and about 18 h of
+server time, so candidates are **screened at seed 42 first** and only those that beat the current config on val
+go on to the full 3 seeds. A screen result is never an adoption decision by itself — the seed spread is ±0.03
+val AUROC, which is larger than most effects being tested.
+
+`--num-nn` needs **no rebuild**: it only changes scoring, so those variants reuse the existing `final_k8_s*`
+banks (`score_two_bank.py --bank-run ... --num-nn k`). Note that PatchCore's score with k > 1 is the *mean*
+distance to the k nearest bank entries, not the distance to the k-th.
+
 ### How to run one candidate
 
 ```bash
@@ -124,18 +133,36 @@ Work down this list, 3 seeds each, and stop when runs stop paying for themselves
 
 Val AUROC, 3 seeds, median [min, max]. Adopt only if the gain clears the spread.
 
-| Run name | Parameter changed | Val AUROC s42 | s43 | s44 | Median [min, max] | Beats current? | Keep? |
-|---|---|---|---|---|---|---|---|
-| (current) | – (K=8 config) | 0.987 | 0.958 | 0.959 | 0.959 [0.958, 0.987] | – | baseline |
-| nn3 | `--num-nn 3` | | | | | | |
-| nn5 | `--num-nn 5` | | | | | | |
-| kfield16 | `--k-field 16` | | | | | | |
-| k12 | `--k 12` | | | | | | |
-| k16 | `--k 16` (SEQUENTIAL=1) | | | | | | |
-| img128 | `--image-size 128` | | | | | | |
-| bb_rn101 | `--backbone resnet101` | | | | | | |
-| l3 | `--layers layer3` | | | | | | |
-| l34 | `--layers layer3 layer4` | | | | | | |
+**Results so far (2026-09-29/10-01).** Tuning was stopped early; what was measured:
+
+| Run | Parameter changed | K | val AUROC s42 | s43 | s44 | Verdict |
+|---|---|---:|---:|---:|---:|---|
+| (current) | – (K=8 config) | 8 | 0.987 | 0.958 | 0.959 | baseline, median 0.959 |
+| nn3 | `--num-nn 3` | 8 | 0.954 | 0.973 | 0.986 | **rejected** — paired change +0.003, sign inconsistent |
+| nn5 | `--num-nn 5` | 8 | 0.916 | 0.970 | 0.985 | **rejected** — paired −0.011 |
+| nn9 | `--num-nn 9` | 8 | 0.896 | 0.970 | 0.986 | **rejected** — paired −0.017 |
+| kfield16 | `--k 8 --k-field 16` | 8 | 0.989 | – | – | +0.002 vs K=8 — inside noise, needs 3 seeds |
+| k12 | `--k 12` | 12 | – | – | – | cancelled mid-run |
+
+> **Flaw in the screening queue (`queue_tune_screen.sh`): the runs below omitted `--k 8`, so they fell back to
+> the default K=4 and changed two things at once.** They are comparable only to the **K=4** baseline
+> `v2_start_s42` (val 0.9541), not to the K=8 config. Re-run with `--k 8` before drawing any conclusion.
+
+| Run | Parameter changed | K | val AUROC s42 | vs K=4 baseline (0.954) |
+|---|---|---:|---:|---|
+| l34 | `--layers layer3 layer4` | 4 | 0.984 | **+0.029** — the only promising lever; re-run at K=8, 3 seeds |
+| bb_rn101 | `--backbone resnet101` | 4 | 0.937 | −0.017 — no gain over wideresnet50 |
+| img128 | `--image-size 128` | 4 | 0.901 | −0.053 — upsampling to 224 helps, keep it |
+| l3 | `--layers layer3` | 4 | 0.891 | −0.063 — layer2 contributes |
+
+Remaining worksheet:
+
+| Run name | Parameter changed | Val AUROC s42 | s43 | s44 | Median [min, max] | Keep? |
+|---|---|---|---|---|---|---|
+| l34_k8 | `--layers layer3 layer4 --k 8` | | | | | |
+| kfield16 | `--k 8 --k-field 16` (seeds 43/44) | 0.989 | | | | |
+| k12 | `--k 12` | | | | | |
+| k16 | `--k 16` (SEQUENTIAL=1) | | | | | |
 
 ## 6. Practical limits (measured on the server)
 

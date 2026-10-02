@@ -1,0 +1,1 @@
+VAL_ONLY=1 PatchCore/run_two_bank.sh kfield16_s42 --k 8 --k-field 16 --seed 42 -- --splits val

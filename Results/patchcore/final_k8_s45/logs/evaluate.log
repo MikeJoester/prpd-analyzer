@@ -1,0 +1,12 @@
+{
+  "aggregation": "mean",
+  "threshold": -0.0134,
+  "val_auroc": 0.9867,
+  "test_auroc": 0.8833,
+  "test_macro_f1": 0.73,
+  "test_balanced_acc": 0.7501,
+  "single_bank_test_auroc": {
+    "pd_bank_only": 0.4396,
+    "noise_bank_only": 0.6635
+  }
+}

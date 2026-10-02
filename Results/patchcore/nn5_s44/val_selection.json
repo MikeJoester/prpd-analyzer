@@ -1,0 +1,87 @@
+{
+  "aggregation": "mean",
+  "threshold": 0.01653035410812922,
+  "val_auroc_by_aggregation": {
+    "mean": 0.9849462365591397,
+    "median": 0.9686881720430107,
+    "max": 0.9423225806451613,
+    "min": 0.9490752688172044,
+    "p90": 0.9686881720430107
+  },
+  "val_metrics": {
+    "n_files": 230,
+    "n_pd": 75,
+    "n_noise": 155,
+    "auroc": 0.9849462365591397,
+    "macro_f1": 0.9367530407191962,
+    "balanced_accuracy": 0.9443010752688172,
+    "accuracy": 0.9434782608695652,
+    "per_class": {
+      "PD": {
+        "precision": 0.8875,
+        "recall": 0.9466666666666667,
+        "f1": 0.9161290322580645,
+        "support": 75
+      },
+      "Noise": {
+        "precision": 0.9733333333333334,
+        "recall": 0.9419354838709677,
+        "f1": 0.9573770491803278,
+        "support": 155
+      }
+    },
+    "confusion_matrix": {
+      "rows_true_[PD,Noise]": [
+        [
+          71,
+          4
+        ],
+        [
+          9,
+          146
+        ]
+      ]
+    },
+    "threshold": 0.01653035410812922
+  },
+  "banks": {
+    "pd": {
+      "train_files": 1783,
+      "train_windows": 14264,
+      "memory_bank_size": 111829,
+      "settings": {
+        "backbone": "wideresnet50",
+        "layers": [
+          "layer2",
+          "layer3"
+        ],
+        "image_size": 224,
+        "pretrain_dim": 1024,
+        "target_dim": 1024,
+        "patchsize": 3,
+        "num_nn": 5
+      },
+      "coreset_ratio": 0.01
+    },
+    "noise": {
+      "train_files": 876,
+      "train_windows": 7008,
+      "memory_bank_size": 54942,
+      "settings": {
+        "backbone": "wideresnet50",
+        "layers": [
+          "layer2",
+          "layer3"
+        ],
+        "image_size": 224,
+        "pretrain_dim": 1024,
+        "target_dim": 1024,
+        "patchsize": 3,
+        "num_nn": 5
+      },
+      "coreset_ratio": 0.01
+    }
+  },
+  "ai_data_root": "/home/dannt/Documents/DR_12/artifacts/ai_data_20260911_011704",
+  "raw_data_version": "raw_v2"
+}

@@ -1,0 +1,4 @@
+failure_group,files,missed_seeds,pulses,suspect,lab_match,bank_gap
+A_textbook_void,7,10.0,17970.0,8.887,0.8,0.129
+B_label_quality,5,7.0,3568.0,425.626,1.0,0.505
+C_sparse,6,6.5,569.0,143.124,0.6,0.187

@@ -1,0 +1,58 @@
+{
+  "cls": "pd",
+  "created_at": "2026-09-29T17:19:48.666485+09:00",
+  "args": {
+    "cls": "pd",
+    "data_root": "PatchCore/patchcore_data/prpd_v2",
+    "out": "Results/patchcore/bb_rn101_s42",
+    "seed": 42,
+    "k": 4,
+    "k_field": null,
+    "backbone": "resnet101",
+    "layers": [
+      "layer2",
+      "layer3"
+    ],
+    "image_size": 224,
+    "pretrain_dim": 1024,
+    "target_dim": 1024,
+    "patchsize": 3,
+    "num_nn": 1,
+    "coreset": 0.01,
+    "train_frac": 1.0,
+    "batch_size": 64,
+    "workers": 8
+  },
+  "settings": {
+    "backbone": "resnet101",
+    "layers": [
+      "layer2",
+      "layer3"
+    ],
+    "image_size": 224,
+    "pretrain_dim": 1024,
+    "target_dim": 1024,
+    "patchsize": 3,
+    "num_nn": 1
+  },
+  "coreset_ratio": 0.01,
+  "train_files": 1783,
+  "train_files_by_domain": {
+    "Lab": 1435,
+    "Field": 348
+  },
+  "train_windows": 7132,
+  "memory_bank_size": 55914,
+  "data_root": "/home/oem/DR_12/PatchCore/patchcore_data/prpd_v2",
+  "data_run_config_sha256": "1b9521aaac25addc20ee9a9a0ca8e62f854d08be6967b87c95b0293cec385584",
+  "ai_data_root": "/home/dannt/Documents/DR_12/artifacts/ai_data_20260911_011704",
+  "raw_data_version": "raw_v2",
+  "split_seed": 42,
+  "torch": "2.5.1+cu121",
+  "cuda": "12.1",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "python": "3.11.16",
+  "peak_gpu_mem_gb": 5.98,
+  "peak_host_rss_gb": 25.25,
+  "seconds": 559.4
+}

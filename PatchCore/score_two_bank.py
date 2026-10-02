@@ -24,6 +24,10 @@ from two_bank_common import WindowDataset, load_bank, load_data_root, make_loade
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--run", type=Path, required=True)
+    p.add_argument("--bank-run", type=Path, default=None,
+                   help="reuse banks from another run (num-nn variants need no rebuild)")
+    p.add_argument("--num-nn", type=int, default=None,
+                   help="override the bank's k: the score becomes the mean distance to the k nearest entries")
     p.add_argument("--cls", choices=["pd", "noise"], required=True)
     p.add_argument("--data-root", type=Path, required=True)
     p.add_argument("--splits", nargs="+", default=["val", "test"])
@@ -36,7 +40,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     started = time.time()
-    bank_dir = args.run / f"bank_{args.cls}"
+    bank_dir = (args.bank_run or args.run) / f"bank_{args.cls}"
     info = json.loads((bank_dir / "bank_info.json").read_text())
     manifest, data_config = load_data_root(args.data_root)
     # Refuse to score with a bank that was built from a different dataset (CLAUDE.md, Section 11).
@@ -55,6 +59,17 @@ def main() -> None:
 
     device = torch.device("cuda:0")
     model = load_bank(bank_dir, device)
+    if args.num_nn is not None:
+        # the k is captured in a closure at construction, so rebinding both is required
+        scorer = model.anomaly_scorer
+        scorer.n_nearest_neighbours = args.num_nn
+        scorer.imagelevel_nn = lambda q, k=args.num_nn: scorer.nn_method.run(k, q)
+        info = {**info, "settings": {**info["settings"], "num_nn": args.num_nn}}
+    if args.bank_run is not None:            # keep the run self-describing for evaluate_two_bank
+        target = args.run / f"bank_{args.cls}"
+        target.mkdir(parents=True, exist_ok=True)
+        (target / "bank_info.json").write_text(json.dumps(
+            {**info, "reused_bank_from": str(args.bank_run)}, indent=2))
     loader = make_loader(WindowDataset(args.data_root, rows, info["settings"]["image_size"]), args.batch_size, args.workers)
     print(f"[{args.cls}] scoring {rows['sample_id'].nunique()} files / {len(rows)} windows", flush=True)
     scores = np.concatenate([np.asarray(model._predict(batch)[0], dtype=np.float64) for batch in loader])

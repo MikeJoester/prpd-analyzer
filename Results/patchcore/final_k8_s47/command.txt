@@ -1,0 +1,1 @@
+VAL_ONLY=0 PatchCore/run_two_bank.sh final_k8_s47 --k 8 --seed 47 -- 

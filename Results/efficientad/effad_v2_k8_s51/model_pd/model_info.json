@@ -1,0 +1,30 @@
+{
+  "method": "efficientad",
+  "cls": "pd",
+  "created_at": "2026-10-01T03:05:59.126494+09:00",
+  "args": {
+    "cls": "pd",
+    "out": "Results/efficientad/effad_v2_k8_s51",
+    "seed": 51,
+    "k": 8,
+    "epochs": 5,
+    "batch_size": 8,
+    "lr": 0.0001,
+    "workers": 6
+  },
+  "train_files": 1783,
+  "train_windows": 14264,
+  "loss_history": [
+    2.7928219474583043e-05,
+    6.643750572192746e-06,
+    4.881269053399067e-06,
+    3.6610798551157973e-06,
+    3.6830116736417164e-06
+  ],
+  "ai_data_root": "/home/dannt/Documents/DR_12/artifacts/ai_data_20260911_011704",
+  "raw_data_version": "raw_v2",
+  "split_seed": 42,
+  "data_run_config_sha256": "1b9521aaac25addc20ee9a9a0ca8e62f854d08be6967b87c95b0293cec385584",
+  "torch": "2.5.1+cu121",
+  "seconds": 140.6
+}

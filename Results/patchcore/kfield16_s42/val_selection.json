@@ -1,0 +1,87 @@
+{
+  "aggregation": "mean",
+  "threshold": 0.005069566624505175,
+  "val_auroc_by_aggregation": {
+    "mean": 0.9890752688172042,
+    "median": 0.9808172043010752,
+    "max": 0.8926451612903225,
+    "min": 0.9216344086021505,
+    "p90": 0.9056774193548387
+  },
+  "val_metrics": {
+    "n_files": 230,
+    "n_pd": 75,
+    "n_noise": 155,
+    "auroc": 0.9890752688172042,
+    "macro_f1": 0.9652560478214894,
+    "balanced_accuracy": 0.9636559139784946,
+    "accuracy": 0.9695652173913043,
+    "per_class": {
+      "PD": {
+        "precision": 0.9594594594594594,
+        "recall": 0.9466666666666667,
+        "f1": 0.9530201342281879,
+        "support": 75
+      },
+      "Noise": {
+        "precision": 0.9743589743589743,
+        "recall": 0.9806451612903225,
+        "f1": 0.977491961414791,
+        "support": 155
+      }
+    },
+    "confusion_matrix": {
+      "rows_true_[PD,Noise]": [
+        [
+          71,
+          4
+        ],
+        [
+          3,
+          152
+        ]
+      ]
+    },
+    "threshold": 0.005069566624505175
+  },
+  "banks": {
+    "pd": {
+      "train_files": 1783,
+      "train_windows": 17048,
+      "memory_bank_size": 133656,
+      "settings": {
+        "backbone": "wideresnet50",
+        "layers": [
+          "layer2",
+          "layer3"
+        ],
+        "image_size": 224,
+        "pretrain_dim": 1024,
+        "target_dim": 1024,
+        "patchsize": 3,
+        "num_nn": 1
+      },
+      "coreset_ratio": 0.01
+    },
+    "noise": {
+      "train_files": 876,
+      "train_windows": 12768,
+      "memory_bank_size": 100101,
+      "settings": {
+        "backbone": "wideresnet50",
+        "layers": [
+          "layer2",
+          "layer3"
+        ],
+        "image_size": 224,
+        "pretrain_dim": 1024,
+        "target_dim": 1024,
+        "patchsize": 3,
+        "num_nn": 1
+      },
+      "coreset_ratio": 0.01
+    }
+  },
+  "ai_data_root": "/home/dannt/Documents/DR_12/artifacts/ai_data_20260911_011704",
+  "raw_data_version": "raw_v2"
+}

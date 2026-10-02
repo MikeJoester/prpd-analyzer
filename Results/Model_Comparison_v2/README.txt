@@ -3,8 +3,8 @@ Final PD-vs-Noise comparison table on the v2 data (PatchCore vs EfficientAD vs O
     python Comparison/compare_v2.py --out Results/Model_Comparison_v2
 
 Every method and baseline is scored by the same function from its saved eval/file_scores.csv, using the
-window aggregation chosen on val (val_selection.json). Cells are median [min, max] over the 3 training
-seeds (42/43/44); the 256-D baselines are deterministic single runs.
+window aggregation chosen on val (val_selection.json). Cells are mean +/- sd over the training seeds, with the median and range in brackets; the 256-D
+baselines are deterministic (one value).
 
 Optimal F1 / Precision / Recall: MACRO averages over the two classes (PD, Noise) at the threshold that
 maximizes macro F1 on the TEST set itself (same definition style as the old v1 "Optimal F1"). Because the

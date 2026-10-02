@@ -1,0 +1,1 @@
+VAL_ONLY=1 PatchCore/run_two_bank.sh bb_rn101_s42 --backbone resnet101 --seed 42 -- --splits val

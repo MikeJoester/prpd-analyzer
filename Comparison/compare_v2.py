@@ -3,8 +3,8 @@
     python Comparison/compare_v2.py --out Results/Model_Comparison_v2
 
 Every method and baseline is scored by the same function from its saved eval/file_scores.csv, using the
-window aggregation chosen on val (val_selection.json). Cells are median [min, max] over the 3 training
-seeds (42/43/44); the 256-D baselines are deterministic single runs.
+window aggregation chosen on val (val_selection.json). Cells are mean +/- sd over the training seeds, with the median and range in brackets; the 256-D
+baselines are deterministic (one value).
 
 Optimal F1 / Precision / Recall: MACRO averages over the two classes (PD, Noise) at the threshold that
 maximizes macro F1 on the TEST set itself (same definition style as the old v1 "Optimal F1"). Because the
@@ -28,7 +28,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "PatchCore"))
 from eval_metrics import best_threshold  # noqa: E402
 
-SEEDS = (42, 43, 44)
+SEEDS = (42, 43, 44, 45, 46, 47, 48, 49, 50, 51)   # seeds present on disk are used; missing ones are skipped
 METHODS = {  # K=8 train windows/file for all three (the K=4 SVM/EfficientAD runs were a mismatch).
     "PatchCore (WRN-50 L2+L3, K=8)": "Results/patchcore/final_k8_s{seed}/eval",
     "EfficientAD (K=8)": "Results/efficientad/effad_v2_k8_s{seed}/eval",
@@ -73,11 +73,14 @@ def score_run(eval_dir: Path) -> dict:
 
 
 def cell(values: list) -> str:
+    """mean +/- sd (median, range) over seeds; a single deterministic run prints one number."""
     values = [v for v in values if v is not None]
     if not values:
         return "n/a"
     s = pd.Series(values)
-    return f"{s.median():.3f} [{s.min():.3f}, {s.max():.3f}]" if len(s) > 1 else f"{s.iloc[0]:.3f}"
+    if len(s) == 1:
+        return f"{s.iloc[0]:.3f}"
+    return f"{s.mean():.3f} +/- {s.std(ddof=1):.3f} (med {s.median():.3f}, {s.min():.3f}-{s.max():.3f})"
 
 
 def main() -> None:

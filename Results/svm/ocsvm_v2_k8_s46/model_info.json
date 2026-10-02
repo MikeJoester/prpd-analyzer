@@ -1,0 +1,29 @@
+{
+  "method": "one_class_svm",
+  "created_at": "2026-10-01T02:52:19.480889+09:00",
+  "args": {
+    "out": "Results/svm/ocsvm_v2_k8_s46",
+    "seed": 46,
+    "k": 8,
+    "nu": 0.01
+  },
+  "feature": "per phase: max over window, max/(nonzero count) -> 256-D (Training_SVM.py)",
+  "ai_data_root": "/home/dannt/Documents/DR_12/artifacts/ai_data_20260911_011704",
+  "raw_data_version": "raw_v2",
+  "split_seed": 42,
+  "data_run_config_sha256": "1b9521aaac25addc20ee9a9a0ca8e62f854d08be6967b87c95b0293cec385584",
+  "sklearn": "1.9.1",
+  "models": {
+    "pd": {
+      "train_files": 1783,
+      "train_windows": 14264,
+      "support_vectors": 1258
+    },
+    "noise": {
+      "train_files": 876,
+      "train_windows": 7008,
+      "support_vectors": 445
+    }
+  },
+  "seconds": 16.9
+}

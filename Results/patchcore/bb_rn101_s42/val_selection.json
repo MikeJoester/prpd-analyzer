@@ -1,0 +1,87 @@
+{
+  "aggregation": "mean",
+  "threshold": -0.09908030714307511,
+  "val_auroc_by_aggregation": {
+    "mean": 0.9373763440860214,
+    "median": 0.9204301075268817,
+    "max": 0.8741075268817203,
+    "min": 0.9003870967741935,
+    "p90": 0.8787096774193548
+  },
+  "val_metrics": {
+    "n_files": 230,
+    "n_pd": 75,
+    "n_noise": 155,
+    "auroc": 0.9373763440860214,
+    "macro_f1": 0.864039408866995,
+    "balanced_accuracy": 0.8578494623655915,
+    "accuracy": 0.8826086956521739,
+    "per_class": {
+      "PD": {
+        "precision": 0.8428571428571429,
+        "recall": 0.7866666666666666,
+        "f1": 0.8137931034482758,
+        "support": 75
+      },
+      "Noise": {
+        "precision": 0.9,
+        "recall": 0.9290322580645162,
+        "f1": 0.9142857142857143,
+        "support": 155
+      }
+    },
+    "confusion_matrix": {
+      "rows_true_[PD,Noise]": [
+        [
+          59,
+          16
+        ],
+        [
+          11,
+          144
+        ]
+      ]
+    },
+    "threshold": -0.09908030714307511
+  },
+  "banks": {
+    "pd": {
+      "train_files": 1783,
+      "train_windows": 7132,
+      "memory_bank_size": 55914,
+      "settings": {
+        "backbone": "resnet101",
+        "layers": [
+          "layer2",
+          "layer3"
+        ],
+        "image_size": 224,
+        "pretrain_dim": 1024,
+        "target_dim": 1024,
+        "patchsize": 3,
+        "num_nn": 1
+      },
+      "coreset_ratio": 0.01
+    },
+    "noise": {
+      "train_files": 876,
+      "train_windows": 3504,
+      "memory_bank_size": 27471,
+      "settings": {
+        "backbone": "resnet101",
+        "layers": [
+          "layer2",
+          "layer3"
+        ],
+        "image_size": 224,
+        "pretrain_dim": 1024,
+        "target_dim": 1024,
+        "patchsize": 3,
+        "num_nn": 1
+      },
+      "coreset_ratio": 0.01
+    }
+  },
+  "ai_data_root": "/home/dannt/Documents/DR_12/artifacts/ai_data_20260911_011704",
+  "raw_data_version": "raw_v2"
+}

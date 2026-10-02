@@ -70,7 +70,7 @@ def tsne_map(out: Path, table: pd.DataFrame, feats: np.ndarray, ids: list[str], 
                    linewidths=.4, label=f"test {k} (n={len(s)})", zorder=3 if k != "correct" else 2)
     ax.set_xticks([]); ax.set_yticks([])
     ax.set_title("t-SNE of the 256-D feature: where PatchCore's test errors sit\n"
-                 "(seed 42, val threshold; grey = train/val files)", fontsize=11, color=INK)
+                 "(seed 42, validation-selected threshold)", fontsize=11, color=INK)
     ax.legend(fontsize=8, loc="best", framealpha=.9)
     for sp in ax.spines.values():
         sp.set_color("#d4dae3")

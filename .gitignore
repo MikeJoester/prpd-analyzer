@@ -61,3 +61,6 @@ Results/**/*.html
 
 # third-party papers - not ours to redistribute (see the registry tables in Plans/)
 *.pdf
+
+# coreset provenance: 4 MB per run, regenerable by rebuilding the bank (train_two_bank.py)
+bank_entry_source.csv

@@ -1,0 +1,1 @@
+VAL_ONLY=0 PatchCore/run_two_bank.sh nnaudit_k8_s42 --k 8 --seed 42 -- 

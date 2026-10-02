@@ -1,0 +1,1 @@
+VAL_ONLY=1 PatchCore/run_two_bank.sh k12_s42 --k 12 --seed 42 -- --splits val
